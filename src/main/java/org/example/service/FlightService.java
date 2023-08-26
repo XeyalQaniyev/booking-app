@@ -1,2 +1,4 @@
-package org.example.service;public class FlightService {
+package org.example.service;
+
+public class FlightService {
 }

@@ -1,2 +1,4 @@
-package org.example.controller;public class FlightController {
+package org.example.controller;
+
+public class FlightController {
 }

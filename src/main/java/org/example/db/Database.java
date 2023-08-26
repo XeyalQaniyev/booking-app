@@ -1,2 +1,4 @@
-package org.example.db;public class Database {
+package org.example.db;
+
+public class Database {
 }

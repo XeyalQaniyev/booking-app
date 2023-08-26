@@ -1,2 +1,4 @@
-package org.example.entity;public class User {
+package org.example.entity;
+
+public class User {
 }

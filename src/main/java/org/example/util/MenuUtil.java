@@ -1,2 +1,4 @@
-package org.example.util;public class MenuUtil {
+package org.example.util;
+
+public class MenuUtil {
 }

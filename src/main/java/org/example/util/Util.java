@@ -1,2 +1,4 @@
-package org.example.util;public class Util {
+package org.example.util;
+
+public class Util {
 }

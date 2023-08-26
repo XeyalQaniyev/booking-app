@@ -1,2 +1,4 @@
-package org.example.entity;public class Flight {
+package org.example.entity;
+
+public class Flight {
 }
