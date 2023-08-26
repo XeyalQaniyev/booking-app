@@ -1,10 +1,10 @@
-package org.example.entity;
+package org.example.app.entity;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Flight {
-
+    private Long id;
     private String flightNumber;
     private String airline;
     private String destination;
@@ -17,10 +17,12 @@ public class Flight {
     private String checkInCounter;
     private LocalDateTime boardingTime;
 
-    public Flight(String flightNumber, String airline, String destination, String departureCity,
-                  LocalDateTime departureTime,
-                  LocalDateTime arrivalTime, String gate, String terminal, String status, String checkInCounter,
-                  LocalDateTime boardingTime) {
+    public Flight(Long id, String flightNumber, String airline,
+                  String destination, String departureCity, LocalDateTime departureTime,
+                  LocalDateTime arrivalTime, String gate, String terminal,
+                  String status, String checkInCounter, LocalDateTime boardingTime) {
+
+        this.id = id;
         this.flightNumber = flightNumber;
         this.airline = airline;
         this.destination = destination;
@@ -32,6 +34,14 @@ public class Flight {
         this.status = status;
         this.checkInCounter = checkInCounter;
         this.boardingTime = boardingTime;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFlightNumber() {
@@ -126,27 +136,26 @@ public class Flight {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Flight flight)) return false;
-        return Objects.equals(getFlightNumber(), flight.getFlightNumber()) && Objects.equals(getAirline(),
-                flight.getAirline()) && Objects.equals(getDestination(),
-                flight.getDestination()) && Objects.equals(getDepartureCity(),
-                flight.getDepartureCity()) && Objects.equals(getDepartureTime(),
-                flight.getDepartureTime()) && Objects.equals(getArrivalTime(),
-                flight.getArrivalTime()) && Objects.equals(getGate(), flight.getGate()) && Objects.equals(getTerminal(),
-                flight.getTerminal()) && Objects.equals(getStatus(),
-                flight.getStatus()) && Objects.equals(getCheckInCounter(),
-                flight.getCheckInCounter()) && Objects.equals(getBoardingTime(), flight.getBoardingTime());
+        return Objects.equals(getId(), flight.getId()) && Objects.equals(getFlightNumber(), flight.getFlightNumber()) &&
+                Objects.equals(getAirline(), flight.getAirline()) && Objects.equals(getDestination(), flight.getDestination()) &&
+                Objects.equals(getDepartureCity(), flight.getDepartureCity()) && Objects.equals(getDepartureTime(), flight.getDepartureTime()) &&
+                Objects.equals(getArrivalTime(), flight.getArrivalTime()) && Objects.equals(getGate(), flight.getGate()) &&
+                Objects.equals(getTerminal(), flight.getTerminal()) && Objects.equals(getStatus(), flight.getStatus()) &&
+                Objects.equals(getCheckInCounter(), flight.getCheckInCounter()) && Objects.equals(getBoardingTime(), flight.getBoardingTime());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFlightNumber(), getAirline(), getDestination(), getDepartureCity(), getDepartureTime(),
-                getArrivalTime(), getGate(), getTerminal(), getStatus(), getCheckInCounter(), getBoardingTime());
+        return Objects.hash(getId(), getFlightNumber(), getAirline(), getDestination(),
+                getDepartureCity(), getDepartureTime(), getArrivalTime(), getGate(), getTerminal(),
+                getStatus(), getCheckInCounter(), getBoardingTime());
     }
 
     @Override
     public String toString() {
         return "Flight{" +
-                "flightNumber='" + flightNumber + '\'' +
+                "id=" + id +
+                ", flightNumber='" + flightNumber + '\'' +
                 ", airline='" + airline + '\'' +
                 ", destination='" + destination + '\'' +
                 ", departureCity='" + departureCity + '\'' +
@@ -159,4 +168,5 @@ public class Flight {
                 ", boardingTime=" + boardingTime +
                 '}';
     }
+
 }
