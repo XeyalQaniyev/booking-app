@@ -1,4 +1,4 @@
-package org.example.Dto;
+package org.example.dto;
 
 public class UserDto {
 }
