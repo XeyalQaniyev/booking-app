@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example.app.entity;
 
 import java.util.List;
 import java.util.Objects;
