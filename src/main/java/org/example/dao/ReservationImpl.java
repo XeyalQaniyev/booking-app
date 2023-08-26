@@ -5,7 +5,7 @@ import org.example.entity.User;
 
 import java.util.List;
 
-public class UserFlightImpl implements UserFlightDao{
+public class ReservationImpl implements ReservationDao {
     @Override
     public List<Flight> getAllFlightsByUserID(User userId) {
         return null;

@@ -5,6 +5,6 @@ import org.example.entity.User;
 
 import java.util.List;
 
-public interface UserFlightDao {
+public interface ReservationDao {
   List<Flight> getAllFlightsByUserID(User userId);
 }

@@ -40,7 +40,7 @@ public class UserFlight {
 
     @Override
     public String toString() {
-        return "UserFlightImpl{" +
+        return "ReservationImpl{" +
                 "id=" + id +
                 ", user_id=" + user_id +
                 ", flight_id=" + flight_id +

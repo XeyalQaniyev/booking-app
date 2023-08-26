@@ -5,6 +5,6 @@ import org.example.entity.User;
 
 import java.util.List;
 
-public interface UserFlightController {
+public interface ReservationController {
     List<Flight> getAllFlightsByUserID(User userId);
 }
