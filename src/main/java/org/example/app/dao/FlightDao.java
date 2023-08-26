@@ -1,4 +1,4 @@
-package org.example.Dao;
+package org.example.app.dao;
 
 public interface FlightDao {
 }
