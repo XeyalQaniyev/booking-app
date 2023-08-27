@@ -1,6 +1,6 @@
-package org.example.util;
+package org.example.app.util;
 
-import org.example.entity.Flight;
+import org.example.app.entity.Flight;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

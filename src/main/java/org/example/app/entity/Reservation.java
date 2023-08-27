@@ -1,4 +1,4 @@
-package org.example.entity;
+package org.example.app.entity;
 
 public class Reservation {
     private int id;

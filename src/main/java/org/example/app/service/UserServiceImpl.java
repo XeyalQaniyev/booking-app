@@ -1,7 +1,7 @@
-package org.example.service;
+package org.example.app.service;
 
-import org.example.dao.UserDao;
-import org.example.dao.UserDaoImpl;
+import org.example.app.dao.UserDao;
+import org.example.app.dao.UserDaoImpl;
 
 public class UserServiceImpl implements UserService {
     private final UserDao userDao = new UserDaoImpl();

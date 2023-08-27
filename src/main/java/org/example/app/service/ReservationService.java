@@ -1,7 +1,7 @@
-package org.example.service;
+package org.example.app.service;
 
-import org.example.entity.Flight;
-import org.example.entity.User;
+import org.example.app.entity.Flight;
+import org.example.app.entity.User;
 
 import java.util.List;
 

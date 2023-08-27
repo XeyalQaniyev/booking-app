@@ -1,9 +1,9 @@
-package org.example.service;
+package org.example.app.service;
 
-import org.example.dao.ReservationDao;
-import org.example.dao.ReservationImpl;
-import org.example.entity.Flight;
-import org.example.entity.User;
+import org.example.app.dao.ReservationDao;
+import org.example.app.dao.ReservationImpl;
+import org.example.app.entity.Flight;
+import org.example.app.entity.User;
 
 import java.util.List;
 
