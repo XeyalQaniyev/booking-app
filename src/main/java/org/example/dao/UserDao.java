@@ -1,4 +1,4 @@
 package org.example.dao;
 
-public interface UserDao {
+public interface UserDao{
 }

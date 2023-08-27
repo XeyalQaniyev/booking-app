@@ -5,7 +5,7 @@ import org.example.entity.User;
 
 import java.util.List;
 
-public class ReservationImpl implements ReservationDao {
+public class ReservationImpl extends AbstractDao implements ReservationDao {
     @Override
     public List<Flight> getAllFlightsByUserID(User userId) {
         return null;

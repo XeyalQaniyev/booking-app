@@ -1,4 +1,4 @@
 package org.example.dao;
 
-public class FlightDaoImpl implements FlightDao{
+public class FlightDaoImpl extends AbstractDao implements FlightDao {
 }

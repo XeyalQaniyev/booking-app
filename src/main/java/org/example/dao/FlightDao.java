@@ -1,4 +1,4 @@
 package org.example.dao;
 
-public interface FlightDao {
+public interface FlightDao{
 }
