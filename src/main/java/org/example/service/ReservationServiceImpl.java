@@ -8,10 +8,12 @@ import org.example.entity.User;
 import java.util.List;
 
 public class ReservationServiceImpl implements ReservationService {
+
     private final ReservationDao userFlightDao = new ReservationImpl();
 
     @Override
     public List<Flight> getAllFlightsByUserID(User userId) {
         return userFlightDao.getAllFlightsByUserID(userId);
     }
+
 }

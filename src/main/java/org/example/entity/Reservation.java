@@ -1,14 +1,14 @@
 package org.example.entity;
 
-public class UserFlight {
+public class Reservation {
     private int id;
     private User user_id;
     private Flight flight_id;
 
-    public UserFlight() {
+    public Reservation() {
     }
 
-    public UserFlight(int id, User user_id, Flight flight_id) {
+    public Reservation(int id, User user_id, Flight flight_id) {
         this.id = id;
         this.user_id = user_id;
         this.flight_id = flight_id;
