@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class Flight {
     private Long id;
+    private int seats;
     private String flightNumber;
     private String airline;
     private String destination;
@@ -16,11 +17,9 @@ public class Flight {
     private String checkInCounter;
     private LocalDateTime boardingTime;
 
-    public Flight(String flightNumber, String airline,
-                  String destination, String departureCity, LocalDateTime departureTime,
-                  LocalDateTime arrivalTime, String gate, String terminal,
-                  String status, String checkInCounter, LocalDateTime boardingTime) {
-
+    public Flight(Long id, int seats, String flightNumber, String airline, String destination, String departureCity, LocalDateTime departureTime, LocalDateTime arrivalTime, String gate, String terminal, String status, String checkInCounter, LocalDateTime boardingTime) {
+        this.id = id;
+        this.seats = seats;
         this.flightNumber = flightNumber;
         this.airline = airline;
         this.destination = destination;
@@ -34,8 +33,8 @@ public class Flight {
         this.boardingTime = boardingTime;
     }
 
-    public Flight(Long id, String flightNumber, String airline, String destination, String departureCity, LocalDateTime departureTime, LocalDateTime arrivalTime, String gate, String terminal, String status, String checkInCounter, LocalDateTime boardingTime) {
-        this.id = id;
+    public Flight(int seats, String flightNumber, String airline, String destination, String departureCity, LocalDateTime departureTime, LocalDateTime arrivalTime, String gate, String terminal, String status, String checkInCounter, LocalDateTime boardingTime) {
+        this.seats = seats;
         this.flightNumber = flightNumber;
         this.airline = airline;
         this.destination = destination;
@@ -55,6 +54,14 @@ public class Flight {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
     }
 
     public String getFlightNumber() {
@@ -144,10 +151,12 @@ public class Flight {
     public void setBoardingTime(LocalDateTime boardingTime) {
         this.boardingTime = boardingTime;
     }
+
     @Override
     public String toString() {
         return "Flight{" +
                 "id=" + id +
+                ", seats=" + seats +
                 ", flightNumber='" + flightNumber + '\'' +
                 ", airline='" + airline + '\'' +
                 ", destination='" + destination + '\'' +
@@ -161,5 +170,4 @@ public class Flight {
                 ", boardingTime=" + boardingTime +
                 '}';
     }
-
 }

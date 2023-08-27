@@ -1,18 +1,19 @@
 package org.example.controller;
 import org.example.entity.Flight;
-import org.example.entity.User;
 import org.example.service.ReservationService;
 import org.example.service.ReservationServiceImpl;
+import org.example.util.MenuUtil;
 
 import java.util.List;
 
 public class ReservationControllerImpl implements ReservationController {
     private final ReservationService userFlightService = new ReservationServiceImpl();
+    private final int userID = MenuUtil.loggedUserID;
 
     @Override
-    public List<Flight> getAllFlightsByUserID(User userId) {
+    public List<Flight> getAllFlights() {
 
-        return userFlightService.getAllFlightsByUserID(userId);
+        return userFlightService.getAllFlightsByUserID(userID);
 
     }
 }

@@ -32,11 +32,10 @@ public class Util {
             return null;
         }
     }
-
     private static Flight getFlight(Object listObj) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-
         JSONObject obj4 = (JSONObject) listObj;
+        int seats = (int) obj4.get("seat");
         String flightNumber = (String) obj4.get("flightNumber");
         String airline = (String) obj4.get("airline");
         String destination = (String) obj4.get("destination");
@@ -48,7 +47,7 @@ public class Util {
         String status = (String) obj4.get("status");
         String checkInCounter = (String) obj4.get("checkInCounter");
         LocalDateTime boardingTime = LocalDateTime.parse((String) obj4.get("boardingTime"), formatter);
-        return new Flight(flightNumber, airline, destination, departureCity, departureTime
+        return new Flight(seats, flightNumber, airline, destination, departureCity, departureTime
                 , arrivalTime, gate, terminal, status, checkInCounter, boardingTime);
 
     }

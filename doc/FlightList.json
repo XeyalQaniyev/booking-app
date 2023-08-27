@@ -1,5 +1,6 @@
 [
     {
+      "seats": 42,
       "flightNumber": "KY345",
       "airline": "Ukraine Airways",
       "destination": "London Heathrow Airport (LHR)",
@@ -13,6 +14,7 @@
       "boardingTime": "2023-08-23T08:30:00"
     },
     {
+      "seats": 28,
       "flightNumber": "UA234",
       "airline": "United Airlines",
       "destination": "John F. Kennedy International Airport (JFK)",
@@ -26,6 +28,7 @@
       "boardingTime": "2023-08-23T09:00:00"
     },
     {
+      "seats": 60,
       "flightNumber": "PS876",
       "airline": "Ukrainian International Airlines",
       "destination": "Charles de Gaulle Airport (CDG)",
@@ -39,6 +42,7 @@
       "boardingTime": "2023-08-23T09:45:00"
     },
     {
+      "seats": 23,
       "flightNumber": "WZ712",
       "airline": "Wizz Air",
       "destination": "Berlin Brandenburg Airport (BER)",
@@ -52,6 +56,7 @@
       "boardingTime": "2023-08-23T10:30:00"
     },
     {
+      "seats": 55,
       "flightNumber": "TK456",
       "airline": "Turkish Airlines",
       "destination": "Istanbul Airport (IST)",
@@ -65,6 +70,7 @@
       "boardingTime": "2023-08-23T11:00:00"
     },
     {
+      "seats": 43,
       "flightNumber": "LH567",
       "airline": "Lufthansa",
       "destination": "Frankfurt Airport (FRA)",
@@ -78,6 +84,7 @@
       "boardingTime": "2023-08-23T12:15:00"
     },
     {
+      "seats": 9,
       "flightNumber": "AZ890",
       "airline": "Alitalia",
       "destination": "Leonardo da Vinci–Fiumicino Airport (FCO)",
@@ -91,6 +98,7 @@
       "boardingTime": "2023-08-23T12:50:00"
     },
     {
+      "seats": 17,
       "flightNumber": "EK321",
       "airline": "Emirates",
       "destination": "Dubai International Airport (DXB)",
@@ -104,6 +112,7 @@
       "boardingTime": "2023-08-23T13:40:00"
     },
     {
+      "seats": 14,
       "flightNumber": "SU678",
       "airline": "Aeroflot",
       "destination": "Sheremetyevo International Airport (SVO)",
@@ -117,6 +126,7 @@
       "boardingTime": "2023-08-23T14:30:00"
     },
     {
+      "seats": 3,
       "flightNumber": "EK654",
       "airline": "Emirates",
       "destination": "Abu Dhabi International Airport (AUH)",
@@ -130,6 +140,7 @@
       "boardingTime": "2023-08-23T19:00:00"
     },
     {
+      "seats": 13,
       "flightNumber": "EK654",
       "airline": "Emirates",
       "destination": "Abu Dhabi International Airport (AUH)",
@@ -143,6 +154,7 @@
       "boardingTime": "2023-08-23T19:00:00"
     },
     {
+      "seats": 35,
       "flightNumber": "QR123",
       "airline": "Qatar Airways",
       "destination": "Hamad International Airport (DOH)",
@@ -156,6 +168,7 @@
       "boardingTime": "2023-09-10T15:15:00"
     },
     {
+      "seats": 38,
       "flightNumber": "LH456",
       "airline": "Lufthansa",
       "destination": "Frankfurt Airport (FRA)",

@@ -6,5 +6,6 @@ import org.example.entity.User;
 import java.util.List;
 
 public interface ReservationController {
-    List<Flight> getAllFlightsByUserID(User userId);
+    List<Flight> getAllFlights();
+
 }
