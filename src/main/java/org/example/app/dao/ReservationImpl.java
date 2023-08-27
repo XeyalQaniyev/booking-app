@@ -8,6 +8,18 @@ import java.util.List;
 public class ReservationImpl extends AbstractDao implements ReservationDao {
     @Override
     public List<Flight> getAllFlightsByUserID(int userId) {
+
         return null;
+    }
+
+    @Override
+    public boolean cancelFlight(int flightID) {
+        return false;
+    }
+
+    @Override
+    public boolean bookFlight(int flightID) {
+
+        return false;
     }
 }

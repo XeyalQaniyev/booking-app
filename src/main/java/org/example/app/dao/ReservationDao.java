@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface ReservationDao{
   List<Flight> getAllFlightsByUserID(int userId);
+  boolean cancelFlight(int flightID);
+  boolean bookFlight(int flightID);
+
 }
