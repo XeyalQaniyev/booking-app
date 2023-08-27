@@ -1,10 +1,10 @@
-package org.example.dao;
+package org.example.app.dao;
 
-import org.example.entity.User;
+import org.example.app.entity.User;
 
 import java.util.List;
 
-public class UserDaoImpl extends AbstractDao implements UserDao {
+public class UserDaoImpl extends AbstractDao implements UserDao{
 
     @Override
     public List<User> getAll() {

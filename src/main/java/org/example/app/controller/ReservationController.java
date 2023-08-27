@@ -1,7 +1,7 @@
-package org.example.controller;
+package org.example.app.controller;
 
-import org.example.entity.Flight;
-import org.example.entity.User;
+
+import org.example.app.entity.Flight;
 
 import java.util.List;
 

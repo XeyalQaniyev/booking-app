@@ -1,5 +1,16 @@
 package org.example.app.dao;
+import org.example.app.entity.Flight;
 
-public interface FlightDao {
-    
+import java.util.List;
+
+public interface FlightDao{
+    void showAll();
+    boolean addFlight(Flight flight);
+    Flight getFlightById(int flightID);
+    List<Flight> getAll();
+
+
+
+
+
 }

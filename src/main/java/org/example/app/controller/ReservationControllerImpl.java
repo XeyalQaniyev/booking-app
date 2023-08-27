@@ -1,8 +1,9 @@
-package org.example.controller;
-import org.example.entity.Flight;
-import org.example.service.ReservationService;
-import org.example.service.ReservationServiceImpl;
-import org.example.util.MenuUtil;
+
+package org.example.app.controller;
+import org.example.app.entity.Flight;
+import org.example.app.service.ReservationService;
+import org.example.app.service.ReservationServiceImpl;
+import org.example.app.util.MenuUtil;
 
 import java.util.List;
 
