@@ -1,4 +1,4 @@
-package org.example;
+package org.example.app;
 
 import org.example.controller.ReservationController;
 import org.example.controller.ReservationControllerImpl;
