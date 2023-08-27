@@ -1,4 +1,5 @@
 package org.example.app.controller;
 
-public class FlightController {
+public interface FlightController {
+
 }
