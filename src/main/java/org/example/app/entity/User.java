@@ -1,25 +1,25 @@
 package org.example.app.entity;
 
-import java.util.List;
-import java.util.Objects;
-
 public class User {
-
     private long id;
     private String name;
     private String surname;
     private int age;
-    private List<Flight> myFlight;
 
-    public User(long id, String name, String surname, int age, List<Flight> myFlight) {
+    private String password;
+    private String userName;
+
+    public User() {
+    }
+
+    public User(long id, String name, String surname, int age, String password, String userName) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.age = age;
-        this.myFlight = myFlight;
+        this.password = password;
+        this.userName = userName;
     }
-
-    public User(){}
 
     public long getId() {
         return id;
@@ -53,26 +53,20 @@ public class User {
         this.age = age;
     }
 
-    public List<Flight> getMyFlight() {
-        return myFlight;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMyFlight(List<Flight> myFlight) {
-        this.myFlight = myFlight;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User user)) return false;
-        return getId() == user.getId() && getAge() == user.getAge() && Objects.equals(getName(),
-                user.getName()) && Objects.equals(getSurname(), user.getSurname()) && Objects.equals(getMyFlight(),
-                user.getMyFlight());
+    public String getUserName() {
+        return userName;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getSurname(), getAge(), getMyFlight());
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Override
@@ -82,7 +76,6 @@ public class User {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", age=" + age +
-                ", myFlight=" + myFlight +
                 '}';
     }
 }
