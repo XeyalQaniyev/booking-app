@@ -11,8 +11,7 @@ public class ReservationControllerImpl implements ReservationController {
 
     @Override
     public List<Flight> getAllFlightsByUserID(User userId) {
-
         return userFlightService.getAllFlightsByUserID(userId);
-
+      
     }
 }

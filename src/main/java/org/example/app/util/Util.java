@@ -23,7 +23,7 @@ public class Util {
             JSONArray list = (JSONArray) obj;
 
             for (Object listObj : list) {
-                    fRecord.add(getFlight(listObj));
+                fRecord.add(getFlight(listObj));
 
             }
             return fRecord;

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ReservationController {
     List<Flight> getAllFlightsByUserID(User userId);
+  
 }
