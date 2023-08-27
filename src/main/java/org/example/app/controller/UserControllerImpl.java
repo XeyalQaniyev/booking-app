@@ -5,4 +5,5 @@ import org.example.app.service.UserServiceImpl;
 
 public class UserControllerImpl implements UserController {
     private final UserService userService = new UserServiceImpl();
+  
 }
