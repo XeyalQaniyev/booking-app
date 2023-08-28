@@ -3,6 +3,7 @@ package org.example.app.service;
 import org.example.app.dao.ReservationDao;
 import org.example.app.dao.ReservationDaoImpl;
 import org.example.app.entity.Flight;
+import org.example.app.entity.Reservation;
 
 import java.util.List;
 
@@ -17,13 +18,14 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public boolean cancelFlight(int userId, int flightId) {
-        return userFlightDao.cancelFlight(userId,flightId);
+    public boolean cancelFlight(Reservation reservation) {
+        return userFlightDao.cancelFlight(reservation);
     }
 
     @Override
-    public boolean bookFlight(int userId, int flightId) {
-        return userFlightDao.bookFlight(userId,flightId);
+    public boolean bookFlight(Reservation reservation) {
+
+        return userFlightDao.bookFlight(reservation);
     }
 
 }
