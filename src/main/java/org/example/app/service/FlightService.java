@@ -12,5 +12,5 @@ public interface FlightService {
 
     Flight getFlightById(int flightID);
 
-    List<Flight> searchFlight(String destination, LocalDate date, int minSeats);
+    void searchFlight(String destination, LocalDate date, int minSeats);
 }

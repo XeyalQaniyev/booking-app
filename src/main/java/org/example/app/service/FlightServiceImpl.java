@@ -26,7 +26,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public List<Flight> searchFlight(String destination, LocalDate date, int minSeats) {
-        return flightDao.searchFlight(destination, date, minSeats);
+    public void searchFlight(String destination, LocalDate date, int minSeats) {
+        flightDao.searchFlight(destination, date, minSeats);
     }
 }
