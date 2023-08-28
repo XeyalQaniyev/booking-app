@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface ReservationController {
     List<Flight> getAllFlights();
+    boolean cancelFlight(int flightId);
+    boolean bookFlight(int flightId);
 
 }
