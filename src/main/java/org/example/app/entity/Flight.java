@@ -3,7 +3,7 @@ package org.example.app.entity;
 import java.time.LocalDateTime;
 
 public class Flight {
-    private Long id;
+    private long id;
     private int seats;
     private String flightNumber;
     private String airline;
@@ -48,11 +48,11 @@ public class Flight {
         this.boardingTime = boardingTime;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

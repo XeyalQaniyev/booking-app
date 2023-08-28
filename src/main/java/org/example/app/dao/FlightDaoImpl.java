@@ -10,39 +10,22 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.stream.Collectors;
 
-public class FlightDaoImpl extends AbstractDao implements FlightDao {
+import java.util.function.Predicate;
 
+
+public class FlightDaoImpl extends AbstractDao implements FlightDao {
+    static Predicate<Flight> c1 = c -> c.getSeats() > 0;
     @Override
     public void showAll() {
-        try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("SELECT * FROM Flight");
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Flight flight = extractFlightFromResultSet(rs);
-                System.out.println(flight);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+            getAll().stream().filter(c1).forEach(System.out::println);
     }
 
     @Override
     public Flight getFlightById(int flightID) {
-        try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("SELECT * FROM Flight WHERE id = ?");
-            stmt.setInt(1, flightID);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return extractFlightFromResultSet(rs);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
+            return getAll().get(flightID);
     }
 
     @Override
@@ -72,21 +55,23 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
     }
 
     @Override
+
     public List<Flight> getAll() {
-        List<Flight> flights = new ArrayList<>();
+        List<Flight> flightList = new ArrayList<>();
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("SELECT * FROM Flight");
-            ResultSet rs = stmt.executeQuery();
-
+            PreparedStatement stmt = c.prepareStatement("select * from \"Flight\" ");
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
-                Flight flight = extractFlightFromResultSet(rs);
-                flights.add(flight);
-            }
 
-        } catch (Exception ex) {
+                Flight f = getFlight(rs);
+                flightList.add(f);
+            }
+            return flightList;
+        } catch (SQLException ex) {
             ex.printStackTrace();
+            return null;
         }
-        return flights;
     }
 
     private Flight extractFlightFromResultSet(ResultSet rs) throws SQLException {

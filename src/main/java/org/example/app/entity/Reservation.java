@@ -2,16 +2,24 @@ package org.example.app.entity;
 
 public class Reservation {
     private int id;
-    private User user_id;
-    private Flight flight_id;
+    private User userId;
+    private Flight flightId;
+    private int passenger;
 
     public Reservation() {
     }
 
-    public Reservation(int id, User user_id, Flight flight_id) {
+    public Reservation(User userId, Flight flightId, int passenger) {
+        this.userId = userId;
+        this.flightId = flightId;
+        this.passenger = passenger;
+    }
+
+    public Reservation(int id, User userId, Flight flightId, int passenger) {
         this.id = id;
-        this.user_id = user_id;
-        this.flight_id = flight_id;
+        this.userId = userId;
+        this.flightId = flightId;
+        this.passenger = passenger;
     }
 
     public int getId() {
@@ -22,28 +30,37 @@ public class Reservation {
         this.id = id;
     }
 
-    public User getUser_id() {
-        return user_id;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setUser_id(User user_id) {
-        this.user_id = user_id;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
-    public Flight getFlight_id() {
-        return flight_id;
+    public Flight getFlightId() {
+        return flightId;
     }
 
-    public void setFlight_id(Flight flight_id) {
-        this.flight_id = flight_id;
+    public void setFlightId(Flight flightId) {
+        this.flightId = flightId;
+    }
+
+    public int getPassenger() {
+        return passenger;
+    }
+
+    public void setPassenger(int passenger) {
+        this.passenger = passenger;
     }
 
     @Override
     public String toString() {
-        return "ReservationImpl{" +
+        return "Reservation{" +
                 "id=" + id +
-                ", user_id=" + user_id +
-                ", flight_id=" + flight_id +
+                ", userId=" + userId.getId()+
+                ", flightId=" + flightId.getId() +
+                ", passenger=" + passenger +
                 '}';
     }
 }

@@ -17,7 +17,14 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
     }
 
     @Override
-    public User getUserById(User id) {
+    public User getUserById(int id) {
         return null;
     }
+
+    @Override
+    public void showMyFlights(int userId) {
+        //join sql command
+    }
+
+
 }
