@@ -1,10 +1,9 @@
 package org.example.app.dao;
 
-import org.example.app.controller.FlightController;
 import org.example.app.entity.Flight;
+import org.example.app.entity.Reservation;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,14 +63,18 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     }
 
     @Override
-    public boolean cancelFlight(int userId, int flightId) {
+    public boolean cancelFlight(Reservation reservation) {
+        int userId = (int) reservation.getUserId().getId();
+        int flightId = (int) reservation.getFlightId().getId();
+        int ticketNum = reservation.getPassenger();
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement("delete from \"Reservation\" where flight_id = ? and user_id =?");
 
             stmt.setInt(1, userId);
-            stmt.setInt(2, flightId);
+            stmt.setInt(2,  flightId);
 
-            return stmt.execute();
+            stmt.execute();
+            return updateSeat(flightId, ticketNum, true);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -80,12 +83,33 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     }
 
     @Override
-    public boolean bookFlight(int userId, int flightId) {
-
+    public boolean bookFlight(Reservation reservation) {
+        int userId = (int) reservation.getUserId().getId();
+        int flightId = (int) reservation.getFlightId().getId();
+        int ticketNum = reservation.getPassenger();
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement("insert into \"Reservation\" (user_id, flight_id) VALUES (?,?)");
 
             stmt.setInt(1, userId);
+            stmt.setInt(2, flightId);
+            stmt.execute();
+            return updateSeat(flightId,ticketNum,true);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    private boolean updateSeat(int flightId, int ticketNum, boolean booked){
+        try (Connection c = connect()) {
+            PreparedStatement stmt = null;
+            if(booked){
+            stmt = c.prepareStatement("update \"Flight\" set seats = seats + ? where id = ?");
+            }
+            else{
+                stmt = c.prepareStatement("update \"Flight\" set seats = seats - ? where id = ?");
+            }
+            stmt.setInt(1, ticketNum);
             stmt.setInt(2, flightId);
 
             return stmt.execute();

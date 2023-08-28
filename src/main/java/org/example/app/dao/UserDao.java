@@ -7,6 +7,8 @@ import java.util.List;
 public interface UserDao{
     List<User> getAll();
     boolean addUser();
-    User getUserById(User id);
+    User getUserById(int id);
+
+    void showMyFlights(int userId);
 
 }
