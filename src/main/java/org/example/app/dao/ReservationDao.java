@@ -1,10 +1,8 @@
 package org.example.app.dao;
 
-
 import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
 
-import java.sql.ResultSet;
 import java.util.List;
 
 public interface ReservationDao{
