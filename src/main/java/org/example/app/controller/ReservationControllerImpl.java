@@ -9,12 +9,22 @@ import java.util.List;
 
 public class ReservationControllerImpl implements ReservationController {
     private final ReservationService userFlightService = new ReservationServiceImpl();
-    private final int userID = MenuUtil.loggedUserID;
+    private final int userId = MenuUtil.loggedUserId;
 
     @Override
     public List<Flight> getAllFlights() {
 
-        return userFlightService.getAllFlightsByUserID(userID);
+        return userFlightService.getAllFlightsByUserId(userId);
 
+    }
+
+    @Override
+    public boolean cancelFlight(int flightId) {
+        return userFlightService.cancelFlight(userId,flightId);
+    }
+
+    @Override
+    public boolean bookFlight(int flightId) {
+        return userFlightService.bookFlight(userId,flightId);
     }
 }

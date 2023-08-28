@@ -40,7 +40,7 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "ReservationImpl{" +
+        return "ReservationDaoImpl{" +
                 "id=" + id +
                 ", user_id=" + user_id +
                 ", flight_id=" + flight_id +
