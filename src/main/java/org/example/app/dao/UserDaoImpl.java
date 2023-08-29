@@ -26,7 +26,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return userlist;
     }
 
@@ -69,7 +68,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public void showMyFlights(int userId) {
-        //join sql command
+
     }
 
     private User getUser(ResultSet rs) {
