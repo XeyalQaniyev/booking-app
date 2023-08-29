@@ -1,10 +1,13 @@
 package org.example.app.dao;
 
+import org.example.app.entity.Flight;
 import org.example.app.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.example.app.util.Util.getFlight;
 
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
@@ -68,9 +71,29 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public void showMyFlights(int userId) {
+        try (Connection c = connect()) {
+            PreparedStatement stmt = c.prepareStatement(
+                    "SELECT f.* FROM \"Flight\" f " +
+                            "JOIN \"Reservation\" r ON f.id = r.flight_id " +
+                            "WHERE r.user_id = ?");
+            stmt.setInt(1, userId);
+            stmt.execute();
 
+            ResultSet rs = stmt.getResultSet();
+            System.out.println("Your flights:");
+            try {
+                while (rs.next()) {
+                    Flight flight = getFlight(rs);
+                    System.out.println(flight);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
-
+    
     private User getUser(ResultSet rs) {
         try {
             int id = rs.getInt("id");

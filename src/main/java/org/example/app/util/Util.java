@@ -59,7 +59,7 @@ public class Util {
         }
     }
 
-    private static Flight getFlight(Object listObj) {
+    public static Flight getFlight(Object listObj) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         JSONObject obj4 = (JSONObject) listObj;
         long seats = (long) obj4.get("seats");
@@ -89,9 +89,5 @@ public class Util {
             e.printStackTrace();
             return false;
         }
-
-
     }
-
-
 }
