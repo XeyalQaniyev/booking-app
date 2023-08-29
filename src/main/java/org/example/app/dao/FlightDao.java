@@ -9,10 +9,5 @@ public interface FlightDao{
     boolean addFlight(Flight flight);
     Flight getFlightById(int flightID);
     List<Flight> getAll();
-    void searchFlight(String destination, LocalDate date, int minSeats);
-
-
-
-
-
+   void searchFlight(String destination, LocalDate date, int minSeats);
 }
