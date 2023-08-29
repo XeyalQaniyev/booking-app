@@ -71,6 +71,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public void showMyFlights(int userId) {
+        List<Flight> userFlights = null;
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement(
                     "SELECT f.* FROM \"Flight\" f " +
@@ -80,17 +81,22 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             stmt.execute();
 
             ResultSet rs = stmt.getResultSet();
-            System.out.println("Your flights:");
-            try {
-                while (rs.next()) {
-                    Flight flight = getFlight(rs);
-                    System.out.println(flight);
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
+
+            userFlights = new ArrayList<>();
+            while (rs.next()) {
+                Flight flight = getFlight(rs);
+                userFlights.add(flight);
             }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+
+        if (userFlights != null && !userFlights.isEmpty()) {
+            System.out.println("Your flights:");
+            userFlights.stream().forEach(System.out::println);
+        } else {
+            System.out.println("You have no flights");
         }
     }
     
