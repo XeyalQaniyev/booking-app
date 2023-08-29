@@ -31,8 +31,22 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
-    public boolean addUser() {
-        return false;
+    public boolean addUser(User u) {
+        try (Connection c = connect()) {
+            PreparedStatement stmt = c.prepareStatement("insert into \"User\"(name,surname,age,password,user_name) values(?,?,?,?,?)");
+
+            stmt.setString(1, u.getName());
+            stmt.setString(2, u.getSurname());
+            stmt.setInt(3, u.getAge());
+            stmt.setString(4, u.getPassword());
+            stmt.setString(4, u.getUserName());
+
+            return stmt.execute();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override

@@ -15,7 +15,6 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
 
     @Override
     public void showAll() {
-
         getAll().stream().filter(c1).forEach(System.out::println);
     }
 
