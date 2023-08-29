@@ -31,8 +31,8 @@ public class FlightControllerImpl implements FlightController {
     }
 
     @Override
-    public void searchFlight(String destination, LocalDate date, int minSeats) {
-        flightService.searchFlight(destination,date,minSeats);
+    public void searchFlight() {
+        flightService.searchFlight();
 
     }
 }

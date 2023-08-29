@@ -5,6 +5,7 @@ import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
 import org.example.app.entity.User;
 import org.example.app.util.MenuUtil;
+import org.example.app.util.Util;
 
 import java.time.LocalDate;
 
@@ -36,7 +37,7 @@ public class Main {
 //        //cancel
 //        reservationDao.cancelFlight(res);
 
-
+//        System.out.println(Util.uploadFlight("C:\\Users\\user\\IdeaProjects\\booking-app\\doc\\FlightList.json"));
 
 
     }
