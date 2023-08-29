@@ -37,7 +37,20 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public User getUserById(int id) {
-        return getAll().get(id);
+        try (Connection c = connect()) {
+            User user = null;
+            PreparedStatement stmt = c.prepareStatement("select * from \"User\" where id = ?");
+            stmt.setInt(1, id);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                user = getUser(rs);
+            }
+            return user;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -53,7 +66,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             int age = rs.getInt("age");
             String pass = rs.getString("password");
             String username = rs.getString("user_name");
-
 
             return new User(id, name, surname, age, pass, username);
         } catch (SQLException ex) {
