@@ -25,7 +25,20 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
 
     @Override
     public Flight getFlightById(int flightID) {
-        return getAll().get(flightID);
+        try (Connection c = connect()) {
+            Flight flight = null;
+            PreparedStatement stmt = c.prepareStatement("select * from \"Flight\" where id = ?");
+            stmt.setInt(1, flightID);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                flight = getFlight(rs);
+            }
+            return flight;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -42,7 +55,6 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
             }
             return flightList;
         } catch (SQLException ex) {
-            System.out.println("error");
             ex.printStackTrace();
             return null;
         }
@@ -54,7 +66,7 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
                 .filter(s -> ((s.getDestination().contains(destination) ||
                         (s.getDepartureTime().getYear() == date.getYear() && s.getDepartureTime().getMonth() == date.getMonth() &&
                                 s.getDepartureTime().getDayOfMonth() == date.getDayOfMonth()))
-                                && s.getSeats() >= minSeats && s.getSeats() >0))
+                        && s.getSeats() >= minSeats && s.getSeats() > 0))
                 .forEach(System.out::println);
 
     }

@@ -9,4 +9,5 @@ public interface ReservationDao{
   List<Flight> getAllFlightsByUserId(int userId);
   boolean cancelFlight(Reservation reservation);
   boolean bookFlight(Reservation reservation);
+
 }

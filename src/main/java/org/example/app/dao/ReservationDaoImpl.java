@@ -2,7 +2,10 @@ package org.example.app.dao;
 
 import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
+import org.example.app.entity.User;
+import org.postgresql.util.PSQLException;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -67,13 +70,19 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
         int userId = (int) reservation.getUserId().getId();
         int flightId = (int) reservation.getFlightId().getId();
         int ticketNum = reservation.getPassenger();
+
+        if(ticketNum != getPassengers(flightId,userId)){
+            throw new RuntimeException("Number of passengers must be equal as you booked!");
+        }
+
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement("delete from \"Reservation\" where flight_id = ? and user_id =?");
 
-            stmt.setInt(1, userId);
-            stmt.setInt(2,  flightId);
+            stmt.setInt(1, flightId);
+            stmt.setInt(2,  userId);
 
             stmt.execute();
+            System.out.println("Reservation was cancelled!");
             return updateSeat(flightId, ticketNum, true);
 
         } catch (SQLException ex) {
@@ -87,19 +96,63 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
         int userId = (int) reservation.getUserId().getId();
         int flightId = (int) reservation.getFlightId().getId();
         int ticketNum = reservation.getPassenger();
+
+        if(ticketNum > getSeats(flightId)){
+            throw new RuntimeException("No enough tickets to buy!");
+        }
+
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("insert into \"Reservation\" (user_id, flight_id) VALUES (?,?)");
+            PreparedStatement stmt = c.prepareStatement("insert into \"Reservation\" (user_id, flight_id, passenger) VALUES (?,?,?)");
 
             stmt.setInt(1, userId);
             stmt.setInt(2, flightId);
+            stmt.setInt(3, ticketNum);
             stmt.execute();
-            return updateSeat(flightId,ticketNum,true);
+            System.out.printf("%s.flight is reserved by %s.user",flightId,userId);
+            return updateSeat(flightId,ticketNum,false);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
     }
+
+    private Integer getPassengers(int flightId, int userId) {
+
+        try (Connection c = connect()) {
+            Integer tNum = null;
+            PreparedStatement stmt = c.prepareStatement("select * from \"Reservation\" where flight_id = ? and user_id =?");
+            stmt.setInt(1, flightId);
+            stmt.setInt(2, userId);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                tNum = rs.getInt("passenger");
+            }
+            return tNum;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    private Integer getSeats(int flightId){
+        try (Connection c = connect()) {
+            Integer sNum = null;
+            PreparedStatement stmt = c.prepareStatement("select seats from \"Flight\" where id = ?");
+            stmt.setInt(1, flightId);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                sNum = rs.getInt("seats");
+            }
+            return sNum;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
     private boolean updateSeat(int flightId, int ticketNum, boolean booked){
         try (Connection c = connect()) {
             PreparedStatement stmt = null;

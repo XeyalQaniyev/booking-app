@@ -1,6 +1,7 @@
 package org.example.app.entity;
 
 public class Reservation {
+
     private int id;
     private User userId;
     private Flight flightId;
@@ -13,6 +14,7 @@ public class Reservation {
         this.userId = userId;
         this.flightId = flightId;
         this.passenger = passenger;
+
     }
 
     public Reservation(int id, User userId, Flight flightId, int passenger) {
