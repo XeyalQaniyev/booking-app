@@ -32,7 +32,8 @@ public class Main {
         Flight flight2 = flightDao.getFlightById(9);
         Reservation res = new Reservation(client,flight,10);
         Reservation res1 = new Reservation(client,flight2,10);
-        reservationDao.showUserFlights(3);
+//        reservationDao.showUserFlights(3);
+        flightDao.searchFlight();
 //
 //        //cancel
 //        reservationDao.cancelFlight(res);
