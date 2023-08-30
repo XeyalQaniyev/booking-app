@@ -74,7 +74,7 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
         System.out.println("How many tickets: ");
         int tickets = sc.nextInt();
 
-        getAll().stream()
+       List<Flight> filteredFlights =  getAll().stream()
                 .filter(
                         s -> (
                                 (s.getDestination().contains(destination) &&
@@ -84,7 +84,16 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
                                 )
                         && s.getSeats() >= tickets && s.getSeats() > 0)
                 )
-                .forEach(System.out::println);
+               .toList();
+
+       if(!filteredFlights.isEmpty()){
+           filteredFlights.stream().forEach(System.out::println);
+       }
+       else{
+           System.err.println("No current fight in this criteria");
+       }
+
+
 
     }
 
