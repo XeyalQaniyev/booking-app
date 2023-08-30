@@ -117,9 +117,6 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
        else{
            System.err.println("No current fight in this criteria");
        }
-
-
-
     }
 
     private Flight getFlight(ResultSet rs) {
