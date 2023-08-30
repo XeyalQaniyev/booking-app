@@ -18,7 +18,7 @@ public class MenuUtil {
     }
 
     public static String getInput() {
-        String str = sc.nextLine();
+        String str = sc.next();
         return str;
     }
 }

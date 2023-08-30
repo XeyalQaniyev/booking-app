@@ -1,7 +1,7 @@
 package org.example.app.constant;
 
 public enum FilePath {
-    FLIGHT_LIST_DOC("C:\\Users\\user\\IdeaProjects\\booking-app\\doc\\FlightList.json");
+    FLIGHT_LIST_DOC("C:\\Users\\Bitboxlab-1\\IdeaProjects\\booking-app\\doc\\FlightList.json");
 
     private final String value;
 

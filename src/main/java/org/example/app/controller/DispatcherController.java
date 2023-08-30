@@ -9,9 +9,10 @@ import org.example.app.entity.User;
 import java.util.Arrays;
 
 import static org.example.app.util.MenuUtil.*;
+import static org.example.app.util.Util.createRez;
+import static org.example.app.util.Util.createUser;
 
 public class DispatcherController {
-
 
         private final FlightController flightController = new FlightControllerImpl();
         private final UserController userController = new UserControllerImpl();
@@ -33,11 +34,16 @@ public class DispatcherController {
                         loginRegister();
                     }
                 }
+                case 2->{
+                    User user = createUser();
+                    userController.addUser(user);
+                    selectMenu(user);
+                }
             }
         }
 
         public  void selectMenu(User user){
-            Reservation reservation;
+            Reservation reservation = null;
             boolean flag=true;
             while (flag){
                 showMenu();
@@ -54,19 +60,20 @@ public class DispatcherController {
                         selectMenu(user);
                     }
                     case 3->{
-                        showSearchAndBookMenu();
+                        showSearchAndRezervMenu();
                         int menuInp = getIndex();
                         switch (menuInp){
                             case 1->{
                                 flightController.searchFlight();
                             }
                             case 2->{
-
+                                reservation = createRez(user);
                             }
                         }
                     }
                     case 4->{
-                        reservationController.cancelFlight(null);
+                        reservation= createRez(user);
+                        reservationController.cancelFlight(reservation);
                     }
                     case 5->{
                         userController.showMyFlights((int) user.getId());
@@ -80,7 +87,7 @@ public class DispatcherController {
             Arrays.stream(Menu.values())
                     .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
         }
-        private void showSearchAndBookMenu() {
+        private void showSearchAndRezervMenu() {
             Arrays.stream(SearchAndBook.values())
                     .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
         }

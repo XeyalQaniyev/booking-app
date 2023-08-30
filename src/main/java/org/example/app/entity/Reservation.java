@@ -14,7 +14,6 @@ public class Reservation {
         this.userId = userId;
         this.flightId = flightId;
         this.passenger = passenger;
-
     }
 
     public Reservation(int id, User userId, Flight flightId, int passenger) {
