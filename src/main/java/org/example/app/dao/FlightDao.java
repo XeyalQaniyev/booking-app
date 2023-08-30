@@ -10,9 +10,4 @@ public interface FlightDao{
     Flight getFlightById(int flightID);
     List<Flight> getAll();
     void searchFlight();
-
-
-
-
-
 }

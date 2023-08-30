@@ -1,6 +1,5 @@
 package org.example.app.dao;
 
-
 import org.example.app.entity.Flight;
 import org.example.app.util.Util;
 
@@ -23,14 +22,37 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
 
     @Override
     public boolean addFlight(Flight flight) {
-        return false;
+        try (Connection c = connect()) {
+            PreparedStatement stmt = c.prepareStatement(
+                    "INSERT INTO \"Flight\" (seats, number, airline, destination, departure_city, " +
+                            "departure_time, arrival_time, gate, terminal, status, counter, boarding_time) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+            stmt.setInt(1, flight.getSeats());
+            stmt.setString(2, flight.getFlightNumber());
+            stmt.setString(3, flight.getAirline());
+            stmt.setString(4, flight.getDestination());
+            stmt.setString(5, flight.getDepartureCity());
+            stmt.setTimestamp(6, Timestamp.valueOf(flight.getDepartureTime()));
+            stmt.setTimestamp(7, Timestamp.valueOf(flight.getArrivalTime()));
+            stmt.setString(8, flight.getGate());
+            stmt.setString(9, flight.getTerminal());
+            stmt.setString(10, flight.getStatus());
+            stmt.setString(11, flight.getCheckInCounter());
+            stmt.setTimestamp(12, Timestamp.valueOf(flight.getBoardingTime()));
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public Flight getFlightById(int flightID) {
         try (Connection c = connect()) {
             Flight flight = null;
-            PreparedStatement stmt = c.prepareStatement("select * from \"Flight\" where id = ?");
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM \"Flight\" WHERE id = ?");
             stmt.setInt(1, flightID);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
@@ -48,11 +70,10 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
     public List<Flight> getAll() {
         List<Flight> flightList = new ArrayList<>();
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("select * from \"Flight\" ");
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM \"Flight\"");
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
-
                 Flight f = getFlight(rs);
                 flightList.add(f);
             }
@@ -90,7 +111,7 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
 
     private Flight getFlight(ResultSet rs) {
         try {
-            long id = rs.getInt("id");
+            long id = rs.getLong("id");
             int seats = rs.getInt("seats");
             String number = rs.getString("number");
             String airline = rs.getString("airline");
@@ -111,6 +132,4 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
             return null;
         }
     }
-
-
 }
