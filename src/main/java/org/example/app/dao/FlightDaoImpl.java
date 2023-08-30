@@ -88,16 +88,28 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
         String destination = sc.next();
         System.out.println("Enter the departure time: ");
         System.out.println("Example: 2023-03-03");
-        String dateString = sc.next();
-        LocalDate date = Util.parseLocalDate(dateString);
+        LocalDate date = Util.parseLocalDate(sc.next());
         System.out.println("How many tickets: ");
         int tickets = sc.nextInt();
 
-        getAllFlight().stream().filter(s -> ((s.getDestination().contains(destination) &&
-                (s.getDepartureTime().getYear() == date.getYear() &&
-                        s.getDepartureTime().getMonth() == date.getMonth() &&
-                        s.getDepartureTime().getDayOfMonth() == date.getDayOfMonth())) &&
-                s.getSeats() >= tickets && s.getSeats() > 0)).forEach(System.out::println);
+       List<Flight> filteredFlights =  getAll().stream()
+                .filter(
+                        s -> (
+                                (s.getDestination().contains(destination) &&
+                        (s.getDepartureTime().getYear() == date.getYear() &&
+                                s.getDepartureTime().getMonth() == date.getMonth() &&
+                                s.getDepartureTime().getDayOfMonth() == date.getDayOfMonth())
+                                )
+                        && s.getSeats() >= tickets && s.getSeats() > 0)
+                )
+               .toList();
+
+       if(!filteredFlights.isEmpty()){
+           filteredFlights.stream().forEach(System.out::println);
+       }
+       else{
+           System.err.println("No current fight in this criteria");
+       }
     }
 
     private Flight getFlight(ResultSet rs) {
