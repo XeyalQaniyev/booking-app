@@ -3,7 +3,7 @@ package org.example.app.service;
 import org.example.app.dao.FlightDao;
 import org.example.app.dao.FlightDaoImpl;
 import org.example.app.entity.Flight;
-import java.time.LocalDate;
+
 import java.util.List;
 
 public class FlightServiceImpl implements  FlightService{
@@ -26,7 +26,7 @@ public class FlightServiceImpl implements  FlightService{
 
     @Override
     public List<Flight> getAll() {
-        return flightDao.getAll();
+        return flightDao.getAllFlight();
     }
 
     @Override

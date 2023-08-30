@@ -1,10 +1,10 @@
 package org.example.app.dao;
 
+import org.example.app.constant.Sql;
 import org.example.app.entity.Flight;
 import org.example.app.util.Util;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,16 +17,13 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
 
     @Override
     public void showAll() {
-        getAll().stream().filter(c1).forEach(System.out::println);
+        getAllFlight().stream().filter(c1).forEach(System.out::println);
     }
 
     @Override
     public boolean addFlight(Flight flight) {
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement(
-                    "INSERT INTO \"Flight\" (seats, number, airline, destination, departure_city, " +
-                            "departure_time, arrival_time, gate, terminal, status, counter, boarding_time) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement stmt = c.prepareStatement(Sql.ADD_FLIGHT.getValue());
 
             stmt.setInt(1, flight.getSeats());
             stmt.setString(2, flight.getFlightNumber());
@@ -52,7 +49,7 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
     public Flight getFlightById(int flightID) {
         try (Connection c = connect()) {
             Flight flight = null;
-            PreparedStatement stmt = c.prepareStatement("SELECT * FROM \"Flight\" WHERE id = ?");
+            PreparedStatement stmt = c.prepareStatement(Sql.GET_FLIGHT_BY_ID.getValue());
             stmt.setInt(1, flightID);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
@@ -67,10 +64,10 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
     }
 
     @Override
-    public List<Flight> getAll() {
+    public List<Flight> getAllFlight() {
         List<Flight> flightList = new ArrayList<>();
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("SELECT * FROM \"Flight\"");
+            PreparedStatement stmt = c.prepareStatement(Sql.GET_ALL_FLIGHT.getValue());
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
@@ -95,7 +92,13 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
         System.out.println("How many tickets: ");
         int tickets = sc.nextInt();
 
-       List<Flight> filteredFlights =  getAll().stream()
+//        getAllFlight().stream().filter(s -> ((s.getDestination().contains(destination) &&
+//                (s.getDepartureTime().getYear() == date.getYear() &&
+//                        s.getDepartureTime().getMonth() == date.getMonth() &&
+//                        s.getDepartureTime().getDayOfMonth() == date.getDayOfMonth())) &&
+//                s.getSeats() >= tickets && s.getSeats() > 0)).forEach(System.out::println);
+
+        List<Flight> filteredFlights =  getAllFlight().stream()
                 .filter(
                         s -> (
                                 (s.getDestination().contains(destination) &&
@@ -127,15 +130,15 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
             String destination = rs.getString("destination");
             String depCity = rs.getString("departure_city");
             LocalDateTime depTime = rs.getTimestamp("departure_time").toLocalDateTime();
-            LocalDateTime arrTime =  rs.getTimestamp("arrival_time").toLocalDateTime();
+            LocalDateTime arrTime = rs.getTimestamp("arrival_time").toLocalDateTime();
             String gate = rs.getString("gate");
             String terminal = rs.getString("terminal");
             String status = rs.getString("status");
             String counter = rs.getString("counter");
             LocalDateTime brdTime = rs.getTimestamp("boarding_time").toLocalDateTime();
 
-            return new Flight(id, seats, number, airline, destination, depCity, depTime,
-                    arrTime, gate, terminal, status, counter, brdTime);
+            return new Flight(id, seats, number, airline, destination, depCity, depTime, arrTime, gate, terminal,
+                    status, counter, brdTime);
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
