@@ -30,7 +30,6 @@ public class Util {
 
     public static LocalDate parseLocalDate(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
         try {
             return LocalDate.parse(date, formatter);
         } catch (Exception e) {
@@ -39,18 +38,13 @@ public class Util {
     }
 
     private static List<Flight> writeFileIntoList(String filePath) {
-
         JSONParser jsonParser = new JSONParser();
         List<Flight> fRecord = new ArrayList<>();
-
         try (FileReader reader = new FileReader(filePath)) {
-
             Object obj = jsonParser.parse(reader);
             JSONArray list = (JSONArray) obj;
-
             for (Object listObj : list) {
                 fRecord.add(getFlight(listObj));
-
             }
             return fRecord;
         } catch (Exception e) {

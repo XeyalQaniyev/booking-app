@@ -13,10 +13,8 @@ public abstract class AbstractDao {
         try {
             return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-
             System.err.println(e.getMessage());
             return null;
         }
-
     }
 }
