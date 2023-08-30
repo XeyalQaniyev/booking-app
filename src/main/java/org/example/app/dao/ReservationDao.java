@@ -9,5 +9,4 @@ public interface ReservationDao{
   void showUserFlights(int userId);
   boolean cancelFlight(Reservation reservation);
   boolean bookFlight(Reservation reservation);
-
 }

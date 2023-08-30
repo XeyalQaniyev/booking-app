@@ -5,6 +5,8 @@ import org.example.app.controller.FlightControllerImpl;
 import org.example.app.dao.FlightDao;
 import org.example.app.dao.FlightDaoImpl;
 import org.example.app.entity.Flight;
+import org.example.app.entity.Reservation;
+import org.example.app.entity.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,14 +17,9 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.*;
 
 public class Util {
-
-
     public static String parseString(LocalDate localDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return localDate.format(formatter);
@@ -30,7 +27,6 @@ public class Util {
 
     public static LocalDate parseLocalDate(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
         try {
             return LocalDate.parse(date, formatter);
         } catch (Exception e) {
@@ -39,18 +35,13 @@ public class Util {
     }
 
     private static List<Flight> writeFileIntoList(String filePath) {
-
         JSONParser jsonParser = new JSONParser();
         List<Flight> fRecord = new ArrayList<>();
-
         try (FileReader reader = new FileReader(filePath)) {
-
             Object obj = jsonParser.parse(reader);
             JSONArray list = (JSONArray) obj;
-
             for (Object listObj : list) {
                 fRecord.add(getFlight(listObj));
-
             }
             return fRecord;
         } catch (Exception e) {
@@ -76,7 +67,6 @@ public class Util {
         LocalDateTime boardingTime = LocalDateTime.parse((String) obj4.get("boardingTime"), formatter);
         return new Flight((int) seats, flightNumber, airline, destination, departureCity, departureTime
                 , arrivalTime, gate, terminal, status, checkInCounter, boardingTime);
-
     }
 
     public static boolean uploadFlight(String filePath) {
@@ -89,5 +79,38 @@ public class Util {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static User createUser(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter name: ");
+        String name = sc.next();
+        System.out.print("Enter surname: ");
+        String surname = sc.next();
+        System.out.print("Enter age: ");
+        int age = sc.nextInt();
+        System.out.print("Enter username: ");
+        String username = sc.next();
+        System.out.print("Enter password: ");
+        String password = sc.next();
+        return new User(name,surname,age,username,password);
+    }
+    public static Reservation createRez(User user){
+        Scanner sc = new Scanner(System.in);
+        FlightController flightController = new FlightControllerImpl();
+        long userId = user.getId();
+        System.out.println("Enter flight id: ");
+        int flightId = sc.nextInt();
+        System.out.println("Enter passenger count: ");
+        int passenger = sc.nextInt();
+        return new Reservation(user,flightController.getFlightById(flightId),passenger);
+    }
+    public static Reservation createRez1(User user){
+        Scanner sc = new Scanner(System.in);
+        FlightController flightController = new FlightControllerImpl();
+        long userId = user.getId();
+        System.out.println("Enter flight id: ");
+        int flightId = sc.nextInt();
+        return new Reservation(user,flightController.getFlightById(flightId));
     }
 }
