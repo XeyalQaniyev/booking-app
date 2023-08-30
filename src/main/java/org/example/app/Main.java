@@ -1,7 +1,6 @@
 package org.example.app;
 
-import org.example.app.controller.FlightController;
-import org.example.app.controller.FlightControllerImpl;
+import org.example.app.controller.DispatcherController;
 import org.example.app.dao.*;
 import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
@@ -12,7 +11,9 @@ import org.example.app.util.Util;
 import java.time.LocalDate;
 
 public class Main {
+    private static final DispatcherController dispatcherController = new DispatcherController();
     public static void main(String[] args) {
+run();
 //        MenuUtil.logging("name", "sdsa");
 //        System.out.println(MenuUtil.loggedUserId);
         //passed loggin
@@ -39,11 +40,17 @@ public class Main {
 //        //cancel
 //        reservationDao.cancelFlight(res);
 
-//        System.out.println(Util.uploadFlight("C:\\Users\\user\\IdeaProjects\\booking-app\\doc\\FlightList.json"));
+//        System.out.println(Util.uploadFlight(FilePath.FLIGHT_LIST_DOC.getValue());
 
-
-        FlightController controller = new FlightControllerImpl();
-        controller.searchFlight();
 
     }
+
+    private static void run() {
+        System.out.println("WELCOME TO APPLICATION");
+
+        dispatcherController.selectMenu();
+
+        System.out.println("GOOD BYE");
+    }
+
 }

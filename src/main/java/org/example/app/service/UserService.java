@@ -10,5 +10,4 @@ public interface UserService {
     boolean addUser(User u);
     User getUserById(int id);
     void showMyFlights(int userId);
-
 }

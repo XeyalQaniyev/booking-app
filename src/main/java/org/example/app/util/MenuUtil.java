@@ -1,7 +1,10 @@
 package org.example.app.util;
 
+import java.util.Scanner;
+
 public class MenuUtil {
-    public static Integer loggedUserId = null;
+    private static final Scanner sc = new Scanner(System.in);
+    public static Integer loggedUserId = 5;
 
     public static void logging(String name, String password){
 
@@ -9,5 +12,8 @@ public class MenuUtil {
 
     }
 
-
+    public static int getIndex(){
+        int cmd = sc.nextInt();
+        return cmd;
+    }
 }
