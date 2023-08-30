@@ -16,10 +16,10 @@ import java.util.List;
 
 public class ReservationControllerImpl implements ReservationController {
     private final ReservationService userFlightService = new ReservationServiceImpl();
-    private final int userId = MenuUtil.loggedUserId;
+//    private final int userId = MenuUtil.loggedUserId;
 
     @Override
-    public void showAllFlights() {
+    public void showAllFlights(int userId) {
         userFlightService.showUserFlights(userId);
     }
 

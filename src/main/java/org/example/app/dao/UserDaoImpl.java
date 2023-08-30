@@ -8,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.app.util.Util.getFlight;
 
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
@@ -60,30 +59,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
-        }
-    }
-
-    @Override
-    public void showMyFlights(int userId) {
-        List<Flight> userFlights = null;
-        try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement(Sql.SHOW_MY_FLIGHT.getValue());
-            stmt.setInt(1, userId);
-            stmt.execute();
-            ResultSet rs = stmt.getResultSet();
-            userFlights = new ArrayList<>();
-            while (rs.next()) {
-                Flight flight = getFlight(rs);
-                userFlights.add(flight);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        if (userFlights != null && !userFlights.isEmpty()) {
-            System.out.println("Your flights:");
-            userFlights.stream().forEach(System.out::println);
-        } else {
-            System.out.println("You have no flights");
         }
     }
 

@@ -67,6 +67,7 @@ public class DispatcherController {
                             }
                             case 2->{
                                 reservation = createRez(user);
+                                reservationController.bookFlight(reservation);
                             }
                         }
                     }
@@ -75,7 +76,7 @@ public class DispatcherController {
                         reservationController.cancelFlight(reservation);
                     }
                     case 5->{
-                        userController.showMyFlights((int) user.getId());
+                        reservationController.showAllFlights((int)user.getId());
                     }
                     case 6->flag=false;
                     default -> System.out.println("ENTER VALID COMMAND");

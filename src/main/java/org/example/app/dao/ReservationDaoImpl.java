@@ -43,15 +43,13 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             return null;
         }
     }
+
+    @Override
     public void showUserFlights(int userId) {
         List<Flight> userFlights = new ArrayList<>();
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement(Sql.GET_ALL_FLIGHT_BY_USER_ID.getValue());
 
-//            PreparedStatement stmt = c.prepareStatement(
-//                    "SELECT f.* FROM \"Flight\" f " +
-//                            "JOIN \"Reservation\" r ON f.id = r.flight_id " +
-//                            "WHERE r.user_id = ?");
             stmt.setInt(1, userId);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
