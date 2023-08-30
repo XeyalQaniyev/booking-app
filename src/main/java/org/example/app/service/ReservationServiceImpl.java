@@ -12,9 +12,8 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationDao userFlightDao = new ReservationDaoImpl();
 
     @Override
-    public List<Flight> getAllFlightsByUserId(int userId) {
-
-        return userFlightDao.getAllFlightsByUserId(userId);
+    public void showUserFlights(int userId) {
+        userFlightDao.showUserFlights(userId);
     }
 
     @Override

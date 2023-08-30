@@ -42,26 +42,31 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             return null;
         }
     }
-
-    @Override
-    public List<Flight> getAllFlightsByUserId(int userId) {
-        List<Flight> flightList = new ArrayList<>();
+    public void showUserFlights(int userId) {
+        List<Flight> userFlights = new ArrayList<>();
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("select u.id,f.* from \"Reservation\" r\n" +
-                    "left join \"User\" u on r.user_id = u.id\n" +
-                    "left join \"Flight\" f on r.flight_id = f.id\n" +
-                    "having u.id = ?");
-
+            PreparedStatement stmt = c.prepareStatement(
+                    "SELECT f.* FROM \"Flight\" f " +
+                            "JOIN \"Reservation\" r ON f.id = r.flight_id " +
+                            "WHERE r.user_id = ?");
+            stmt.setInt(1, userId);
+            stmt.execute();
             ResultSet rs = stmt.getResultSet();
-            while (rs.next()) {
 
-                Flight f = getFlight(rs);
-                flightList.add(f);
+            while (rs.next()) {
+                Flight flight = getFlight(rs);
+                userFlights.add(flight);
             }
-            return flightList;
+
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return null;
+        }
+
+        if (userFlights != null && !userFlights.isEmpty()) {
+            System.out.println("Your flights:");
+            userFlights.stream().forEach(System.out::println);
+        } else {
+            System.out.println("You have no booked flights");
         }
     }
 

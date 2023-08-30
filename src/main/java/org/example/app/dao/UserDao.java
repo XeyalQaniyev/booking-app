@@ -8,6 +8,5 @@ public interface UserDao{
     List<User> getAll();
     boolean addUser(User u);
     User getUserById(int id);
-    void showMyFlights(int userId);
 
 }

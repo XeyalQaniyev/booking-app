@@ -58,7 +58,6 @@ public class Util {
             return null;
         }
     }
-
     private static Flight getFlight(Object listObj) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         JSONObject obj4 = (JSONObject) listObj;

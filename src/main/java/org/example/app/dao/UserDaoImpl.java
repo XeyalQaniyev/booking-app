@@ -51,9 +51,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public User getUserById(int id) {
+        User user = null;
         try (Connection c = connect()) {
-            User user = null;
-            PreparedStatement stmt = c.prepareStatement("select * from \"User\" where id = ?");
+            PreparedStatement stmt = connect().prepareStatement("select * from \"User\" where id = ?");
             stmt.setInt(1, id);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
@@ -65,11 +65,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             ex.printStackTrace();
             return null;
         }
-    }
-
-    @Override
-    public void showMyFlights(int userId) {
-        //join sql command
     }
 
     private User getUser(ResultSet rs) {
