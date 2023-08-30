@@ -49,21 +49,28 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
     }
 
     @Override
-    public Flight getFlightById(int flightID) {
-        try (Connection c = connect()) {
-            Flight flight = null;
-            PreparedStatement stmt = c.prepareStatement("SELECT * FROM \"Flight\" WHERE id = ?");
-            stmt.setInt(1, flightID);
-            stmt.execute();
-            ResultSet rs = stmt.getResultSet();
-            while (rs.next()) {
-                flight = getFlight(rs);
-            }
-            return flight;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
+    public void searchFlight() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the destination: ");
+        String destination = sc.next();
+        System.out.println("Enter the departure time: ");
+        System.out.println("Example: 2023-03-03");
+        LocalDate date = Util.parseLocalDate(sc.next());
+        System.out.println("How many tickets: ");
+        int tickets = sc.nextInt();
+
+        getAll().stream()
+                .filter(
+                        s -> (
+                                (s.getDestination().contains(destination) &&
+                                        (s.getDepartureTime().getYear() == date.getYear() &&
+                                                s.getDepartureTime().getMonth() == date.getMonth() &&
+                                                s.getDepartureTime().getDayOfMonth() == date.getDayOfMonth())
+                                )
+                                        && s.getSeats() >= tickets && s.getSeats() > 0)
+                )
+                .forEach(System.out::println);
+
     }
 
     @Override
@@ -85,28 +92,21 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
     }
 
     @Override
-    public void searchFlight() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the destination: ");
-        String destination = sc.next();
-        System.out.println("Enter the departure time: ");
-        System.out.println("Example: 2023-03-03");
-        LocalDate date = Util.parseLocalDate(sc.next());
-        System.out.println("How many tickets: ");
-        int tickets = sc.nextInt();
-
-        getAll().stream()
-                .filter(
-                        s -> (
-                                (s.getDestination().contains(destination) &&
-                        (s.getDepartureTime().getYear() == date.getYear() &&
-                                s.getDepartureTime().getMonth() == date.getMonth() &&
-                                s.getDepartureTime().getDayOfMonth() == date.getDayOfMonth())
-                                )
-                        && s.getSeats() >= tickets && s.getSeats() > 0)
-                )
-                .forEach(System.out::println);
-
+    public Flight getFlightById(int flightID) {
+        try (Connection c = connect()) {
+            Flight flight = null;
+            PreparedStatement stmt = c.prepareStatement("SELECT * FROM \"Flight\" WHERE id = ?");
+            stmt.setInt(1, flightID);
+            stmt.execute();
+            ResultSet rs = stmt.getResultSet();
+            while (rs.next()) {
+                flight = getFlight(rs);
+            }
+            return flight;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     private Flight getFlight(ResultSet rs) {
@@ -132,4 +132,5 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
             return null;
         }
     }
+
 }

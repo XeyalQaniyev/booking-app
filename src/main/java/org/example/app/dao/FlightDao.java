@@ -7,7 +7,7 @@ import java.util.List;
 public interface FlightDao{
     void showAll();
     boolean addFlight(Flight flight);
-    Flight getFlightById(int flightID);
-    List<Flight> getAll();
     void searchFlight();
+    List<Flight> getAll();
+    Flight getFlightById(int flightID);
 }

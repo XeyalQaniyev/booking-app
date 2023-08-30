@@ -21,8 +21,8 @@ public class FlightControllerImpl implements FlightController {
     }
 
     @Override
-    public Flight getFlightById(int flightID) {
-        return flightService.getFlightById(flightID);
+    public void searchFlight() {
+        flightService.searchFlight();
     }
 
     @Override
@@ -31,7 +31,8 @@ public class FlightControllerImpl implements FlightController {
     }
 
     @Override
-    public void searchFlight() {
-        flightService.searchFlight();
+    public Flight getFlightById(int flightID) {
+        return flightService.getFlightById(flightID);
     }
+
 }

@@ -1,5 +1,7 @@
 package org.example.app;
 
+import org.example.app.controller.FlightController;
+import org.example.app.controller.FlightControllerImpl;
 import org.example.app.dao.*;
 import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
@@ -39,6 +41,9 @@ public class Main {
 
 //        System.out.println(Util.uploadFlight("C:\\Users\\user\\IdeaProjects\\booking-app\\doc\\FlightList.json"));
 
+
+        FlightController controller = new FlightControllerImpl();
+        controller.searchFlight();
 
     }
 }
