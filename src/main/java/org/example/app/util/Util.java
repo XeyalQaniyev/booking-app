@@ -105,4 +105,12 @@ public class Util {
         int passenger = sc.nextInt();
         return new Reservation(user,flightController.getFlightById(flightId),passenger);
     }
+    public static Reservation createRez1(User user){
+        Scanner sc = new Scanner(System.in);
+        FlightController flightController = new FlightControllerImpl();
+        long userId = user.getId();
+        System.out.println("Enter flight id: ");
+        int flightId = sc.nextInt();
+        return new Reservation(user,flightController.getFlightById(flightId));
+    }
 }

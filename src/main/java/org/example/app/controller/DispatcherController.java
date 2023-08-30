@@ -9,8 +9,7 @@ import org.example.app.entity.User;
 import java.util.Arrays;
 
 import static org.example.app.util.MenuUtil.*;
-import static org.example.app.util.Util.createRez;
-import static org.example.app.util.Util.createUser;
+import static org.example.app.util.Util.*;
 
 public class DispatcherController {
 
@@ -72,7 +71,7 @@ public class DispatcherController {
                         }
                     }
                     case 4->{
-                        reservation= createRez(user);
+                        reservation= createRez1(user);
                         reservationController.cancelFlight(reservation);
                     }
                     case 5->{
