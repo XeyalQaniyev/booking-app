@@ -61,10 +61,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     public boolean cancelFlight(Reservation reservation) {
         int userId = (int) reservation.getUserId().getId();
         int flightId = (int) reservation.getFlightId().getId();
-        int ticketNum = reservation.getPassenger();
-        if(ticketNum != getPassengers(flightId,userId)){
-            throw new RuntimeException("Number of passengers must be equal as you booked!");
-        }
+        int ticketNum = getPassengers(flightId,userId);
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement(Sql.CANCEL_FLIGHT.getValue());
             stmt.setInt(1, flightId);
