@@ -11,7 +11,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User authenticate(String username, String password) {
-        return userDao.getAll()
+        return userDao.getAllUser()
                 .stream()
                 .findAny()
                 .filter(user ->
@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        return userDao.getAll();
+        return userDao.getAllUser();
     }
 
     @Override

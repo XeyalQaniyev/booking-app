@@ -1,5 +1,6 @@
 package org.example.app.dao;
 
+import org.example.app.constant.Sql;
 import org.example.app.entity.Flight;
 import org.example.app.entity.User;
 
@@ -12,14 +13,14 @@ import static org.example.app.util.Util.getFlight;
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAllUser() {
         List<User> userlist = new ArrayList<>();
 
         Statement stmt = null;
 
         try (Connection c = connect()) {
             stmt = connect().createStatement();
-            stmt.execute("select * from \"User\" ");
+            stmt.execute(Sql.GET_ALL_USER.getValue());
 
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
@@ -35,7 +36,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public boolean addUser(User u) {
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("insert into \"User\"(name,surname,age,password,user_name) values(?,?,?,?,?)");
+            PreparedStatement stmt = c.prepareStatement(Sql.ADD_USER.getValue());
 
             stmt.setString(1, u.getName());
             stmt.setString(2, u.getSurname());
@@ -55,7 +56,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     public User getUserById(int id) {
         try (Connection c = connect()) {
             User user = null;
-            PreparedStatement stmt = c.prepareStatement("select * from \"User\" where id = ?");
+            PreparedStatement stmt = c.prepareStatement(Sql.GET_USER_BY_ID.getValue());
             stmt.setInt(1, id);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
@@ -73,10 +74,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     public void showMyFlights(int userId) {
         List<Flight> userFlights = null;
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement(
-                    "SELECT f.* FROM \"Flight\" f " +
-                            "JOIN \"Reservation\" r ON f.id = r.flight_id " +
-                            "WHERE r.user_id = ?");
+            PreparedStatement stmt = c.prepareStatement(Sql.SHOW_MY_FLIGHT.getValue());
             stmt.setInt(1, userId);
             stmt.execute();
 

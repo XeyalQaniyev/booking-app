@@ -1,5 +1,6 @@
 package org.example.app.dao;
 
+import org.example.app.constant.Sql;
 import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
 import org.example.app.entity.User;
@@ -47,10 +48,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     public List<Flight> getAllFlightsByUserId(int userId) {
         List<Flight> flightList = new ArrayList<>();
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("select u.id,f.* from \"Reservation\" r\n" +
-                    "left join \"User\" u on r.user_id = u.id\n" +
-                    "left join \"Flight\" f on r.flight_id = f.id\n" +
-                    "having u.id = ?");
+            PreparedStatement stmt = c.prepareStatement(Sql.GET_ALL_FLIGHT_BY_USER_ID.getValue());
 
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
@@ -76,7 +74,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
         }
 
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("delete from \"Reservation\" where flight_id = ? and user_id =?");
+            PreparedStatement stmt = c.prepareStatement(Sql.CANCEL_FLIGHT.getValue());
 
             stmt.setInt(1, flightId);
             stmt.setInt(2,  userId);
@@ -92,7 +90,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     }
 
     @Override
-    public boolean bookFlight(Reservation reservation) {
+    public boolean bookingFlight(Reservation reservation) {
         int userId = (int) reservation.getUserId().getId();
         int flightId = (int) reservation.getFlightId().getId();
         int ticketNum = reservation.getPassenger();
@@ -102,7 +100,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
         }
 
         try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement("insert into \"Reservation\" (user_id, flight_id, passenger) VALUES (?,?,?)");
+            PreparedStatement stmt = c.prepareStatement(Sql.BOOKING_FLIGHT.getValue());
 
             stmt.setInt(1, userId);
             stmt.setInt(2, flightId);
@@ -121,7 +119,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
 
         try (Connection c = connect()) {
             Integer tNum = null;
-            PreparedStatement stmt = c.prepareStatement("select * from \"Reservation\" where flight_id = ? and user_id =?");
+            PreparedStatement stmt = c.prepareStatement(Sql.GET_PASSENGER.getValue());
             stmt.setInt(1, flightId);
             stmt.setInt(2, userId);
             stmt.execute();
@@ -138,7 +136,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     private Integer getSeats(int flightId){
         try (Connection c = connect()) {
             Integer sNum = null;
-            PreparedStatement stmt = c.prepareStatement("select seats from \"Flight\" where id = ?");
+            PreparedStatement stmt = c.prepareStatement(Sql.GET_SEAT.getValue());
             stmt.setInt(1, flightId);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
@@ -157,10 +155,10 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
         try (Connection c = connect()) {
             PreparedStatement stmt = null;
             if(booked){
-            stmt = c.prepareStatement("update \"Flight\" set seats = seats + ? where id = ?");
+            stmt = c.prepareStatement(Sql.UPDATE_SEAT.getValue());
             }
             else{
-                stmt = c.prepareStatement("update \"Flight\" set seats = seats - ? where id = ?");
+                stmt = c.prepareStatement(Sql.UPDATE_SEAT_MINUS.getValue());
             }
             stmt.setInt(1, ticketNum);
             stmt.setInt(2, flightId);
