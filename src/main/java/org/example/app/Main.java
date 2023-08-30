@@ -1,6 +1,9 @@
 package org.example.app;
 
+import org.example.app.constant.FilePath;
 import org.example.app.controller.DispatcherController;
+import org.example.app.controller.FlightController;
+import org.example.app.controller.FlightControllerImpl;
 import org.example.app.dao.*;
 import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
@@ -12,43 +15,16 @@ import java.time.LocalDate;
 
 public class Main {
     private static final DispatcherController dispatcherController = new DispatcherController();
+
     public static void main(String[] args) {
-run();
-//        MenuUtil.logging("name", "sdsa");
-//        System.out.println(MenuUtil.loggedUserId);
-        //passed loggin
-
-        //Online board
-//        FlightDao flightDao = new FlightDaoImpl();
-//        flightDao.showAll();
-
-        //SHOW THE FLIGHT INFO
-//        System.out.println(flightDao.getFlightById(3));
-
-//        //search and book
-//        flightDao.searchFlight("British", LocalDate.ofEpochDay(2025-8-26),5);
-//
-//        ReservationDao reservationDao = new ReservationDaoImpl();
-//        UserDao user = new UserDaoImpl();
-//        User client = user.getUserById(8);
-//        Flight flight = flightDao.getFlightById(5);
-////        System.out.println(flight.getId());
-//        Reservation res = new Reservation(client,flight,10);
-//        reservationDao.bookFlight(res);
-
-//
-//        //cancel
-//        reservationDao.cancelFlight(res);
-
-//        System.out.println(Util.uploadFlight(FilePath.FLIGHT_LIST_DOC.getValue());
-
-
+        Util.uploadFlight("C:\\Users\\Bitboxlab-1\\IdeaProjects\\booking-app\\doc\\FlightList.json");
+        run();
     }
 
     private static void run() {
         System.out.println("WELCOME TO APPLICATION");
 
-        dispatcherController.selectMenu();
+        dispatcherController.loginRegister();
 
         System.out.println("GOOD BYE");
     }

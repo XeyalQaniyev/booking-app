@@ -88,7 +88,8 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
         String destination = sc.next();
         System.out.println("Enter the departure time: ");
         System.out.println("Example: 2023-03-03");
-        LocalDate date = Util.parseLocalDate(sc.next());
+        String dateString = sc.next();
+        LocalDate date = Util.parseLocalDate(dateString);
         System.out.println("How many tickets: ");
         int tickets = sc.nextInt();
 
