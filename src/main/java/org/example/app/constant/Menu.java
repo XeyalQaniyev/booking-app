@@ -3,7 +3,7 @@ package org.example.app.constant;
 public enum Menu {
     BOARD(1, "Online-board"),
     SHOW(2, "Show the flight info"),
-    SEARCH(3, "Search and book a flight"),
+    SEARCH(3, "Search and reservation a flight"),
     CANCEL(4, "Cancel the booking"),
     My_FLIGHT(5, "My flights"),
     EXIT(6, "EXIT");
