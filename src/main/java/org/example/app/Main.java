@@ -37,7 +37,7 @@ public class Main {
 //        //cancel
 //        reservationDao.cancelFlight(res);
 
-//        System.out.println(Util.uploadFlight("C:\\Users\\user\\IdeaProjects\\booking-app\\doc\\FlightList.json"));
+//        System.out.println(Util.uploadFlight(FilePath.FLIGHT_LIST_DOC.getValue());
 
 
     }

@@ -97,7 +97,6 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
                         s.getDepartureTime().getMonth() == date.getMonth() &&
                         s.getDepartureTime().getDayOfMonth() == date.getDayOfMonth())) &&
                 s.getSeats() >= tickets && s.getSeats() > 0)).forEach(System.out::println);
-
     }
 
     private Flight getFlight(ResultSet rs) {

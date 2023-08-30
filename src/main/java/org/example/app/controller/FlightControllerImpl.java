@@ -33,6 +33,5 @@ public class FlightControllerImpl implements FlightController {
     @Override
     public void searchFlight() {
         flightService.searchFlight();
-
     }
 }

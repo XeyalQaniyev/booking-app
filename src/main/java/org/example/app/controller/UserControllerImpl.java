@@ -30,7 +30,5 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public void showMyFlights(int userId) {
-
-    }
+    public void showMyFlights(int userId) {}
 }
