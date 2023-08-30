@@ -53,9 +53,9 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public User getUserById(int id) {
+        User user = null;
         try (Connection c = connect()) {
-            User user = null;
-            PreparedStatement stmt = c.prepareStatement("select * from \"User\" where id = ?");
+            PreparedStatement stmt = connect().prepareStatement("select * from \"User\" where id = ?");
             stmt.setInt(1, id);
             stmt.execute();
             ResultSet rs = stmt.getResultSet();
@@ -69,37 +69,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         }
     }
 
-    @Override
-    public void showMyFlights(int userId) {
-        List<Flight> userFlights = null;
-        try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement(
-                    "SELECT f.* FROM \"Flight\" f " +
-                            "JOIN \"Reservation\" r ON f.id = r.flight_id " +
-                            "WHERE r.user_id = ?");
-            stmt.setInt(1, userId);
-            stmt.execute();
-
-            ResultSet rs = stmt.getResultSet();
-
-            userFlights = new ArrayList<>();
-            while (rs.next()) {
-                Flight flight = getFlight(rs);
-                userFlights.add(flight);
-            }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-
-        if (userFlights != null && !userFlights.isEmpty()) {
-            System.out.println("Your flights:");
-            userFlights.stream().forEach(System.out::println);
-        } else {
-            System.out.println("You have no flights");
-        }
-    }
-    
     private User getUser(ResultSet rs) {
         try {
             int id = rs.getInt("id");

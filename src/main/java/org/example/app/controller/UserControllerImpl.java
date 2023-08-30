@@ -29,8 +29,4 @@ public class UserControllerImpl implements UserController {
         return userService.getUserById(id);
     }
 
-    @Override
-    public void showMyFlights(int userId) {
-
-    }
 }

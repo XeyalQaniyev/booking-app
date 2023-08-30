@@ -34,8 +34,4 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserById(id);
     }
 
-    @Override
-    public void showMyFlights(int userId) {
-        userDao.showMyFlights(userId);
-    }
 }

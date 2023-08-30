@@ -16,7 +16,7 @@ public class Main {
         //passed loggin
 
         //Online board
-//        FlightDao flightDao = new FlightDaoImpl();
+        FlightDao flightDao = new FlightDaoImpl();
 //        flightDao.showAll();
 
         //SHOW THE FLIGHT INFO
@@ -25,14 +25,14 @@ public class Main {
 //        //search and book
 //        flightDao.searchFlight("British", LocalDate.ofEpochDay(2025-8-26),5);
 //
-//        ReservationDao reservationDao = new ReservationDaoImpl();
-//        UserDao user = new UserDaoImpl();
-//        User client = user.getUserById(8);
-//        Flight flight = flightDao.getFlightById(5);
-////        System.out.println(flight.getId());
-//        Reservation res = new Reservation(client,flight,10);
-//        reservationDao.bookFlight(res);
-
+        ReservationDao reservationDao = new ReservationDaoImpl();
+        UserDao user = new UserDaoImpl();
+        User client = user.getUserById(8);
+        Flight flight = flightDao.getFlightById(5);
+        Flight flight2 = flightDao.getFlightById(9);
+        Reservation res = new Reservation(client,flight,10);
+        Reservation res1 = new Reservation(client,flight2,10);
+        reservationDao.showUserFlights(3);
 //
 //        //cancel
 //        reservationDao.cancelFlight(res);
