@@ -19,8 +19,8 @@ public class ReservationControllerImpl implements ReservationController {
     private final int userId = MenuUtil.loggedUserId;
 
     @Override
-    public List<Flight> getAllFlights() {
-        return userFlightService.getAllFlightsByUserId(userId);
+    public void showAllFlights() {
+        userFlightService.showUserFlights(userId);
     }
 
     @Override

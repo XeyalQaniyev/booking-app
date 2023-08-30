@@ -8,11 +8,12 @@ import org.example.app.entity.Reservation;
 import java.util.List;
 
 public class ReservationServiceImpl implements ReservationService {
+
     private final ReservationDao userFlightDao = new ReservationDaoImpl();
 
     @Override
-    public List<Flight> getAllFlightsByUserId(int userId) {
-        return userFlightDao.getAllFlightsByUserId(userId);
+    public void showUserFlights(int userId) {
+        userFlightDao.showUserFlights(userId);
     }
 
     @Override
@@ -22,6 +23,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public boolean bookFlight(Reservation reservation) {
-        return userFlightDao.bookingFlight(reservation);
+
+        return userFlightDao.bookFlight(reservation);
     }
+
 }

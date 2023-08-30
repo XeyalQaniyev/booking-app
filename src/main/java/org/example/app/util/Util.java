@@ -50,7 +50,7 @@ public class Util {
         }
     }
 
-    public static Flight getFlight(Object listObj) {
+    private static Flight getFlight(Object listObj) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         JSONObject obj4 = (JSONObject) listObj;
         long seats = (long) obj4.get("seats");

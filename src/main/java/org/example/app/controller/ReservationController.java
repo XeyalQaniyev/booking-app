@@ -7,7 +7,7 @@ import org.example.app.entity.Reservation;
 import java.util.List;
 
 public interface ReservationController {
-    List<Flight> getAllFlights();
+    void showAllFlights();
     boolean cancelFlight(Reservation reservation);
     boolean bookFlight(Reservation reservation);
 
