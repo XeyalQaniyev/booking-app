@@ -1,10 +1,13 @@
 package org.example.app.dao;
 
+import org.example.app.entity.Flight;
 import org.example.app.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.example.app.util.Util.getFlight;
 
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
@@ -26,7 +29,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return userlist;
     }
 
