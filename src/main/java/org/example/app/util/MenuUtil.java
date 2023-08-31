@@ -21,12 +21,14 @@ public class MenuUtil {
     }
     public static void showMenu() {
         Arrays.stream(Menu.values())
-                .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
+                .forEach(it -> System.out.printf("\n%d-%s", it.getIndex(), it.getDescription()));
+        System.out.println("");
     }
 
     public static void showSearchAndRezervMenu() {
         Arrays.stream(SearchAndBook.values())
                 .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
+
     }
 
     public static void showLoginAndRegisterMenu() {

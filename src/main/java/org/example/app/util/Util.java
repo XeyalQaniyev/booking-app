@@ -95,6 +95,16 @@ public class Util {
         String password = sc.next();
         return new User(name,surname,age,username,password);
     }
+    public static User createPassenger(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter name: ");
+        String name = sc.next();
+        System.out.print("Enter surname: ");
+        String surname = sc.next();
+        System.out.print("Enter age: ");
+        int age = sc.nextInt();
+        return new User(name,surname,age);
+    }
     public static Reservation createRez(User user){
         Scanner sc = new Scanner(System.in);
         FlightController flightController = new FlightControllerImpl();
@@ -103,6 +113,11 @@ public class Util {
         int flightId = sc.nextInt();
         System.out.println("Enter passenger count: ");
         int passenger = sc.nextInt();
+
+        for (int i = 0; i < passenger; i++) {
+            System.out.printf("Please enter %s.the user information:",i+1);
+
+        }
         return new Reservation(user,flightController.getFlightById(flightId),passenger);
     }
     public static Reservation createRez1(User user){

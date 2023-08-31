@@ -1,7 +1,7 @@
 package org.example.app.constant;
 
 public enum Menu {
-    BOARD(1, "\nOnline-board"),
+    BOARD(1, "Online-board"),
     SHOW(2, "Show the flight info"),
     SEARCH(3, "Search and reservation a flight"),
     CANCEL(4, "Cancel the booking"),
