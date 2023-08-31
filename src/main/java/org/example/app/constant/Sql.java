@@ -25,9 +25,6 @@ public enum Sql {
             "WHERE r.user_id = ?"),
 
     ;
-
-
-
     private final String value;
 
     Sql(String value) {

@@ -17,7 +17,13 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
 
     @Override
     public void showAll() {
-        getAllFlight().stream().filter(c1).forEach(System.out::println);
+        List<Flight> allFlights = getAllFlight().stream().filter(c1).toList();
+        if(!allFlights.isEmpty()){
+            allFlights.forEach(System.out::println);
+        }
+        else{
+            System.err.println("Sorry! No current flight");
+        }
     }
 
     @Override

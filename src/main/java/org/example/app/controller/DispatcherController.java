@@ -7,7 +7,6 @@ import static org.example.app.util.MenuUtil.*;
 import static org.example.app.util.Util.*;
 
 public class DispatcherController {
-    public static User loggedUser = null;
     private static int logginCount = 0;
     private final FlightController flightController = new FlightControllerImpl();
     private final UserController userController = new UserControllerImpl();
@@ -79,7 +78,6 @@ public class DispatcherController {
             String password = getInput();
             User user = userController.authenticate(userName, password);
             if (user != null) {
-                loggedUser = user;
                 selectMenu(user);
                 return;
             } else {

@@ -16,7 +16,6 @@ import java.util.List;
 
 public class ReservationControllerImpl implements ReservationController {
     private final ReservationService userFlightService = new ReservationServiceImpl();
-    private final long loggedUserId = DispatcherController.loggedUser.getId();
 
     @Override
     public void showAllFlights(int userId) {
@@ -33,7 +32,8 @@ public class ReservationControllerImpl implements ReservationController {
         if (reservation.getFlightId().getSeats() >= reservation.getPassenger()) {
             return userFlightService.bookFlight(reservation);
         } else {
-            throw new ArrayIndexOutOfBoundsException("There is no enough ticket to buy");
+            System.err.println("Flight is full currently");
+            return false;
         }
     }
 }
