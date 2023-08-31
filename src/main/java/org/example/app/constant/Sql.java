@@ -17,7 +17,7 @@ public enum Sql {
     GET_SEAT("select seats from \"Flight\" where id = ?"),
     UPDATE_SEAT("update \"Flight\" set seats = seats + ? where id = ?"),
     UPDATE_SEAT_MINUS("update \"Flight\" set seats = seats - ? where id = ?"),
-    GET_ALL_USER("select * from \"User\" "),
+    GET_ALL_USER("select * from \"User\" where user_name is not null"),
     ADD_USER("insert into \"User\"(name,surname,age,user_name,password) values(?,?,?,?,?)"),
     GET_USER_BY_ID("select * from \"User\" where id = ?"),
     SHOW_MY_FLIGHT("SELECT f.* FROM \"Flight\" f " +

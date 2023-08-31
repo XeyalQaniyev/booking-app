@@ -2,7 +2,6 @@ package org.example.app.controller;
 
 import org.example.app.entity.Flight;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface FlightController {

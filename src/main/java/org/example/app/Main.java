@@ -1,7 +1,11 @@
 package org.example.app;
 
 import org.example.app.controller.DispatcherController;
-import org.example.app.util.Util;
+import org.example.app.dao.UserDao;
+import org.example.app.dao.UserDaoImpl;
+import org.example.app.entity.User;
+import org.example.app.service.UserService;
+import org.example.app.service.UserServiceImpl;
 
 public class Main {
     private static final DispatcherController dispatcherController = new DispatcherController();

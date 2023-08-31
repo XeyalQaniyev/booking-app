@@ -58,7 +58,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             ex.printStackTrace();
         }
 
-        if (userFlights != null && !userFlights.isEmpty()) {
+        if (!userFlights.isEmpty()) {
             System.out.println("Your flights:");
             userFlights.stream().forEach(System.out::println);
         } else {
@@ -151,7 +151,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
 
     private boolean updateSeat(int flightId, int ticketNum, boolean booked){
         try (Connection c = connect()) {
-            PreparedStatement stmt = null;
+            PreparedStatement stmt;
             if(booked){
             stmt = c.prepareStatement(Sql.UPDATE_SEAT.getValue());
             }

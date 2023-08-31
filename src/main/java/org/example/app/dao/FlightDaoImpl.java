@@ -112,7 +112,7 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
                .toList();
 
        if(!filteredFlights.isEmpty()){
-           filteredFlights.stream().forEach(System.out::println);
+           filteredFlights.forEach(System.out::println);
        }
        else{
            System.err.println("No current fight in this criteria");

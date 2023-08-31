@@ -15,7 +15,8 @@ public class UserServiceImpl implements UserService {
                 .stream()
                 .filter(user ->
                         user.getUserName().equals(username)&&
-                                user.getPassword().equals(password)).findFirst().orElse(null);
+                                user.getPassword().equals(password)).findAny().orElse(null);
+
     }
 
     @Override
