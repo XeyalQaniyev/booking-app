@@ -4,6 +4,8 @@ import org.example.app.entity.Reservation;
 import org.example.app.entity.User;
 import org.example.app.util.MenuUtil;
 
+import java.util.Scanner;
+
 import static org.example.app.util.MenuUtil.*;
 import static org.example.app.util.Util.*;
 
@@ -103,11 +105,37 @@ public class DispatcherController {
 
     private void register() {
         User user = createUser();
-        if (userController.addUser(user)) {
-            selectMenu(user);
-        } else {
+        boolean reg = userController.addUser(user);
+        if (!reg) {
             System.err.println("Register failed!");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             loginRegister();
+        } else {
+            selectMenu(user);
         }
+    }
+
+    private Reservation createRez(User user) {
+        Scanner sc = new Scanner(System.in);
+        FlightController flightController = new FlightControllerImpl();
+        long userId = user.getId();
+        System.out.println("Enter flight id: ");
+        int flightId = sc.nextInt();
+        System.out.println("Enter passenger count: ");
+        int passenger = sc.nextInt();
+        if (passenger < 1) {
+            System.err.println("At least 1 passenger must be entered! ");
+            passenger = sc.nextInt();
+        }
+
+        for (int i = 1; i < passenger; i++) {
+            System.out.printf("Please enter %s.the user information:\n", i + 1);
+            userController.addUser(createPassenger());
+        }
+        return new Reservation(user, flightController.getFlightById(flightId), passenger);
     }
 }

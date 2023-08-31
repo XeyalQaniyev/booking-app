@@ -94,7 +94,6 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
         int userId = (int) reservation.getUserId().getId();
         int flightId = (int) reservation.getFlightId().getId();
         int ticketNum = reservation.getPassenger();
-
         if(ticketNum > getSeats(flightId)){
             throw new RuntimeException("No enough tickets to buy!");
         }

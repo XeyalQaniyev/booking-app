@@ -37,7 +37,8 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             stmt.setInt(3, u.getAge());
             stmt.setString(4, u.getPassword());
             stmt.setString(5, u.getUserName());
-            return stmt.execute();
+            stmt.execute();
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;
