@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ReservationControllerImpl implements ReservationController {
     private final ReservationService userFlightService = new ReservationServiceImpl();
-//    private final int userId = MenuUtil.loggedUserId;
+    private final long loggedUserId = DispatcherController.loggedUser.getId();
 
     @Override
     public void showAllFlights(int userId) {

@@ -1,16 +1,14 @@
 package org.example.app.util;
 
+import org.example.app.constant.LoginRegister;
+import org.example.app.constant.Menu;
+import org.example.app.constant.SearchAndBook;
+
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class MenuUtil {
     private static final Scanner sc = new Scanner(System.in);
-    public static Integer loggedUserId = 5;
-
-    public static void logging(String name, String password) {
-
-        loggedUserId = 5;
-
-    }
 
     public static int getIndex() {
         int cmd = sc.nextInt();
@@ -20,5 +18,19 @@ public class MenuUtil {
     public static String getInput() {
         String str = sc.next();
         return str;
+    }
+    public static void showMenu() {
+        Arrays.stream(Menu.values())
+                .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
+    }
+
+    public static void showSearchAndRezervMenu() {
+        Arrays.stream(SearchAndBook.values())
+                .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
+    }
+
+    public static void showLoginAndRegisterMenu() {
+        Arrays.stream(LoginRegister.values())
+                .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
     }
 }

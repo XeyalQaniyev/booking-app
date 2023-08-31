@@ -1,25 +1,20 @@
 package org.example.app.controller;
 
-import org.example.app.constant.LoginRegister;
-import org.example.app.constant.Menu;
-import org.example.app.constant.SearchAndBook;
 import org.example.app.entity.Reservation;
 import org.example.app.entity.User;
-
-import java.util.Arrays;
-
+import org.example.app.util.MenuUtil;
 import static org.example.app.util.MenuUtil.*;
 import static org.example.app.util.Util.*;
 
 public class DispatcherController {
-    private static User loggedUser = null;
+    public static User loggedUser = null;
     private static int logginCount = 0;
     private final FlightController flightController = new FlightControllerImpl();
     private final UserController userController = new UserControllerImpl();
     private final ReservationController reservationController = new ReservationControllerImpl();
 
     public void loginRegister() {
-        showLoginAndRegisterMenu();
+        MenuUtil.showLoginAndRegisterMenu();
         int index = getIndex();
         switch (index) {
             case 1 -> {
@@ -36,7 +31,7 @@ public class DispatcherController {
         Reservation reservation;
         boolean flag = true;
         while (flag) {
-            showMenu();
+            MenuUtil.showMenu();
             int index = getIndex();
             switch (index) {
                 case 1 -> {
@@ -50,7 +45,7 @@ public class DispatcherController {
                     selectMenu(user);
                 }
                 case 3 -> {
-                    showSearchAndRezervMenu();
+                    MenuUtil.showSearchAndRezervMenu();
                     int menuInp = getIndex();
                     switch (menuInp) {
                         case 1 -> {
@@ -75,20 +70,6 @@ public class DispatcherController {
         }
     }
 
-    private void showMenu() {
-        Arrays.stream(Menu.values())
-                .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
-    }
-
-    private void showSearchAndRezervMenu() {
-        Arrays.stream(SearchAndBook.values())
-                .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
-    }
-
-    private void showLoginAndRegisterMenu() {
-        Arrays.stream(LoginRegister.values())
-                .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
-    }
 
     private void logging() {
         for (int attempts = logginCount; attempts < 3; attempts++) {

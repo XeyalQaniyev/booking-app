@@ -1,9 +1,6 @@
 package org.example.app;
 
 import org.example.app.controller.DispatcherController;
-import org.example.app.controller.UserController;
-import org.example.app.controller.UserControllerImpl;
-import org.example.app.entity.User;
 import org.example.app.util.Util;
 
 public class Main {
