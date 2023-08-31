@@ -7,7 +7,7 @@ public class Main {
     private static final DispatcherController dispatcherController = new DispatcherController();
 
     public static void main(String[] args) {
-        Util.uploadFlight("C:\\Users\\user\\IdeaProjects\\booking-app\\doc\\FlightList.json");
+        Util.uploadFlight("C:\\Users\\aveira\\Documents\\GitHub\\other_github_repos\\booking-app\\doc\\FlightList.json");
         run();
 
     }
