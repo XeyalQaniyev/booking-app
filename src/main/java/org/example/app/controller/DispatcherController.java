@@ -1,79 +1,113 @@
 package org.example.app.controller;
 
-import org.example.app.constant.LoginRegister;
-import org.example.app.constant.Menu;
-import org.example.app.constant.SearchAndBook;
+import org.example.app.entity.Reservation;
 import org.example.app.entity.User;
+import org.example.app.util.MenuUtil;
 
-import java.util.Arrays;
+import static org.example.app.util.MenuUtil.*;
+import static org.example.app.util.Util.*;
 
-import static org.example.app.util.MenuUtil.getIndex;
+public class DispatcherController {
+    private static int logginCount = 0;
+    private final FlightController flightController = new FlightControllerImpl();
+    private final UserController userController = new UserControllerImpl();
+    private final ReservationController reservationController = new ReservationControllerImpl();
 
-    public class DispatcherController {
-
-        private final FlightController flightController = new FlightControllerImpl();
-        private final UserController userController = new UserControllerImpl();
-        private final ReservationController reservationController = new ReservationControllerImpl();
-
-        public void loginRegister(){
-            showLoginAndRegisterMenu();
-            int index = getIndex();
-            switch (index){
-                case 1->{
-
-                }
+    public void loginRegister() {
+        MenuUtil.showLoginAndRegisterMenu();
+        int index = getIndex();
+        switch (index) {
+            case 1 -> {
+                logging();
             }
-        }
-
-        public  void selectMenu(){
-            boolean flag=true;
-            while (flag){
-                showMenu();
-                int index = getIndex();
-                switch (index){
-                    case 1->{
-                        flightController.showAll();
-                        selectMenu();
-                    }
-                    case 2->{
-                        System.out.println("Enter flight id:");
-                        int flightId = getIndex();
-                        System.out.println(flightController.getFlightById(flightId));
-                        selectMenu();
-                    }
-                    case 3->{
-                        showSearchAndBookMenu();
-                        int menuinp = getIndex();
-                        switch (menuinp){
-                            case 1->{
-                                flightController.searchFlight();
-                            }
-                            case 2->{
-                                reservationController.bookFlight(null);
-                            }
-                        }
-                    }
-                    case 4->{
-                        reservationController.cancelFlight(null);
-                    }
-                    case 5->{
-                        userController.showMyFlights();
-                    }
-                    case 6->flag=false;
-                    default -> System.out.println("ENTER VALID COMMAND");
-                }
+            case 2 -> {
+                register();
             }
-        }
-        private void showMenu() {
-            Arrays.stream(Menu.values())
-                    .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
-        }
-        private void showSearchAndBookMenu() {
-            Arrays.stream(SearchAndBook.values())
-                    .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
-        }
-        private void showLoginAndRegisterMenu(){
-            Arrays.stream(LoginRegister.values())
-                    .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
+
         }
     }
+
+    public void selectMenu(User user) {
+        Reservation reservation;
+        boolean flag = true;
+        while (flag) {
+            MenuUtil.showMenu();
+            int index = getIndex();
+            switch (index) {
+                case 1 -> {
+                    flightController.showAll();
+                    selectMenu(user);
+                }
+                case 2 -> {
+                    System.out.println("Enter flight id:");
+                    int flightId = getIndex();
+                    System.out.println(flightController.getFlightById(flightId));
+                    selectMenu(user);
+                }
+                case 3 -> {
+                    MenuUtil.showSearchAndRezervMenu();
+                    int menuInp = getIndex();
+                    switch (menuInp) {
+                        case 1 -> {
+                            flightController.searchFlight();
+                        }
+                        case 2 -> {
+                            reservation = createRez(user);
+                            reservationController.bookFlight(reservation);
+                        }
+                    }
+                }
+                case 4 -> {
+                    reservation = createRez1(user);
+                    reservationController.cancelFlight(reservation);
+                }
+                case 5 -> {
+                    reservationController.showAllFlights((int) user.getId());
+                }
+                case 6 -> {
+                    loginRegister();
+                }
+                case 7 -> flag = false;
+                default -> System.out.println("ENTER VALID COMMAND");
+            }
+        }
+    }
+
+    private void logging() {
+        for (int attempts = logginCount; attempts < 3; attempts++) {
+            logginCount++;
+            System.out.print("Enter username: ");
+            String userName = getInput();
+            System.out.print("Enter password: ");
+            String password = getInput();
+
+            User user = userController.authenticate(userName, password);
+
+            if (user != null) {
+                selectMenu(user);
+                return;
+            } else if (attempts == 2) {
+                throw new RuntimeException("No possible user!");
+            } else {
+                System.err.println("Wrong username or password!");
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                loginRegister();
+            }
+
+        }
+    }
+
+    private void register() {
+        User user = createUser();
+        if (userController.addUser(user)) {
+            selectMenu(user);
+        } else {
+            System.err.println("Register failed!");
+            loginRegister();
+        }
+    }
+}

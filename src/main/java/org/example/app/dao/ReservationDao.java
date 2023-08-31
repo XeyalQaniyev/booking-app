@@ -6,7 +6,7 @@ import org.example.app.entity.Reservation;
 import java.util.List;
 
 public interface ReservationDao{
-  List<Flight> getAllFlightsByUserId(int userId);
+  void showUserFlights(int userId);
   boolean cancelFlight(Reservation reservation);
-  boolean bookingFlight(Reservation reservation);
+  boolean bookFlight(Reservation reservation);
 }

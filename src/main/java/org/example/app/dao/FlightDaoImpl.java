@@ -17,7 +17,13 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
 
     @Override
     public void showAll() {
-        getAllFlight().stream().filter(c1).forEach(System.out::println);
+        List<Flight> allFlights = getAllFlight().stream().filter(c1).toList();
+        if(!allFlights.isEmpty()){
+            allFlights.forEach(System.out::println);
+        }
+        else{
+            System.err.println("Sorry! No current flight");
+        }
     }
 
     @Override
@@ -88,15 +94,29 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
         String destination = sc.next();
         System.out.println("Enter the departure time: ");
         System.out.println("Example: 2023-03-03");
-        LocalDate date = Util.parseLocalDate(sc.next());
+        String dateString = sc.next();
+        LocalDate date = Util.parseLocalDate(dateString);
         System.out.println("How many tickets: ");
         int tickets = sc.nextInt();
 
-        getAllFlight().stream().filter(s -> ((s.getDestination().contains(destination) &&
-                (s.getDepartureTime().getYear() == date.getYear() &&
-                        s.getDepartureTime().getMonth() == date.getMonth() &&
-                        s.getDepartureTime().getDayOfMonth() == date.getDayOfMonth())) &&
-                s.getSeats() >= tickets && s.getSeats() > 0)).forEach(System.out::println);
+        List<Flight> filteredFlights =  getAllFlight().stream()
+                .filter(
+                        s -> (
+                                (s.getDestination().contains(destination) &&
+                        (s.getDepartureTime().getYear() == date.getYear() &&
+                                s.getDepartureTime().getMonth() == date.getMonth() &&
+                                s.getDepartureTime().getDayOfMonth() == date.getDayOfMonth())
+                                )
+                        && s.getSeats() >= tickets && s.getSeats() > 0)
+                )
+               .toList();
+
+       if(!filteredFlights.isEmpty()){
+           filteredFlights.stream().forEach(System.out::println);
+       }
+       else{
+           System.err.println("No current fight in this criteria");
+       }
     }
 
     private Flight getFlight(ResultSet rs) {

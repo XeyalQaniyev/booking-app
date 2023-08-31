@@ -10,7 +10,7 @@ public enum Sql {
     GET_ALL_FLIGHT_BY_USER_ID("select u.id,f.* from \"Reservation\" r\n" +
             "left join \"User\" u on r.user_id = u.id\n" +
             "left join \"Flight\" f on r.flight_id = f.id\n" +
-            "having u.id = ?"),
+            "where u.id = ?"),
     CANCEL_FLIGHT("delete from \"Reservation\" where flight_id = ? and user_id =?"),
     BOOKING_FLIGHT("insert into \"Reservation\" (user_id, flight_id, passenger) VALUES (?,?,?)"),
     GET_PASSENGER("select * from \"Reservation\" where flight_id = ? and user_id =?"),
@@ -18,16 +18,13 @@ public enum Sql {
     UPDATE_SEAT("update \"Flight\" set seats = seats + ? where id = ?"),
     UPDATE_SEAT_MINUS("update \"Flight\" set seats = seats - ? where id = ?"),
     GET_ALL_USER("select * from \"User\" "),
-    ADD_USER("insert into \"User\"(name,surname,age,password,user_name) values(?,?,?,?,?)"),
+    ADD_USER("insert into \"User\"(name,surname,age,user_name,password) values(?,?,?,?,?)"),
     GET_USER_BY_ID("select * from \"User\" where id = ?"),
     SHOW_MY_FLIGHT("SELECT f.* FROM \"Flight\" f " +
             "JOIN \"Reservation\" r ON f.id = r.flight_id " +
             "WHERE r.user_id = ?"),
 
     ;
-
-
-
     private final String value;
 
     Sql(String value) {

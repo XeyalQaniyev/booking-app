@@ -1,6 +1,5 @@
 package org.example.app.dao;
 
-import org.example.app.constant.Sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,9 +7,9 @@ import java.sql.SQLException;
 
 public abstract class AbstractDao {
     public Connection connect() {
-        String url = Sql.DB_URL.getValue();
+        String url = "jdbc:postgresql://localhost:5432/bookingapp";
         String username = "postgres";
-        String password = "root";
+        String password = "12345";
         try {
             return DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {

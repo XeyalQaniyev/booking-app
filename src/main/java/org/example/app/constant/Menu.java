@@ -1,12 +1,13 @@
 package org.example.app.constant;
 
 public enum Menu {
-    BOARD(1, "Online-board"),
+    BOARD(1, "\nOnline-board"),
     SHOW(2, "Show the flight info"),
-    SEARCH(3, "Search and book a flight"),
+    SEARCH(3, "Search and reservation a flight"),
     CANCEL(4, "Cancel the booking"),
     My_FLIGHT(5, "My flights"),
-    EXIT(6, "EXIT");
+    LOGOUT(6, "LOG OUT"),
+    EXIT(7, "EXIT");
 
     private final String description;
     private final int index;

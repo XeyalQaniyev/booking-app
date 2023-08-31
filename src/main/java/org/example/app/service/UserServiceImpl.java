@@ -13,10 +13,9 @@ public class UserServiceImpl implements UserService {
     public User authenticate(String username, String password) {
         return userDao.getAllUser()
                 .stream()
-                .findAny()
                 .filter(user ->
-                        user.getUserName().equalsIgnoreCase(username)&&
-                                user.getPassword().equalsIgnoreCase(password)).orElse(null);
+                        user.getUserName().equals(username)&&
+                                user.getPassword().equals(password)).findFirst().orElse(null);
     }
 
     @Override
@@ -34,8 +33,4 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserById(id);
     }
 
-    @Override
-    public void showMyFlights(int userId) {
-        userDao.showMyFlights(userId);
-    }
 }

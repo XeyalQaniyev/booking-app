@@ -8,16 +8,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.app.util.Util.getFlight;
 
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public List<User> getAllUser() {
         List<User> userlist = new ArrayList<>();
-        Statement stmt = null;
         try (Connection c = connect()) {
-            stmt = connect().createStatement();
+            Statement stmt = connect().createStatement();
             stmt.execute(Sql.GET_ALL_USER.getValue());
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {
@@ -38,7 +36,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
             stmt.setString(2, u.getSurname());
             stmt.setInt(3, u.getAge());
             stmt.setString(4, u.getPassword());
-            stmt.setString(4, u.getUserName());
+            stmt.setString(5, u.getUserName());
             return stmt.execute();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -47,8 +45,8 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
     @Override
     public User getUserById(int id) {
+        User user = null;
         try (Connection c = connect()) {
-            User user = null;
             PreparedStatement stmt = c.prepareStatement(Sql.GET_USER_BY_ID.getValue());
             stmt.setInt(1, id);
             stmt.execute();
@@ -63,30 +61,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         }
     }
 
-    @Override
-    public void showMyFlights(int userId) {
-        List<Flight> userFlights = null;
-        try (Connection c = connect()) {
-            PreparedStatement stmt = c.prepareStatement(Sql.SHOW_MY_FLIGHT.getValue());
-            stmt.setInt(1, userId);
-            stmt.execute();
-            ResultSet rs = stmt.getResultSet();
-            userFlights = new ArrayList<>();
-            while (rs.next()) {
-                Flight flight = getFlight(rs);
-                userFlights.add(flight);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        if (userFlights != null && !userFlights.isEmpty()) {
-            System.out.println("Your flights:");
-            userFlights.stream().forEach(System.out::println);
-        } else {
-            System.out.println("You have no flights");
-        }
-    }
-    
     private User getUser(ResultSet rs) {
         try {
             int id = rs.getInt("id");

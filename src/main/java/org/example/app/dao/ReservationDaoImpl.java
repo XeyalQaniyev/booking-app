@@ -1,12 +1,7 @@
 package org.example.app.dao;
-
 import org.example.app.constant.Sql;
 import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
-import org.example.app.entity.User;
-import org.postgresql.util.PSQLException;
-
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,14 +16,18 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             String airline = rs.getString("airline");
             String destination = rs.getString("destination");
             String depCity = rs.getString("departure_city");
+
             Timestamp depts = rs.getTimestamp("departure_time");
             LocalDateTime depTime = depts.toLocalDateTime();
+
             Timestamp arrts = rs.getTimestamp("arrival_time");
             LocalDateTime arrTime = arrts.toLocalDateTime();
+
             String gate = rs.getString("gate");
             String terminal = rs.getString("terminal");
             String status = rs.getString("status");
             String counter = rs.getString("counter");
+
             Timestamp brdts = rs.getTimestamp("boarding_time");
             LocalDateTime brdTime = brdts.toLocalDateTime();
 
@@ -41,19 +40,29 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     }
 
     @Override
-    public List<Flight> getAllFlightsByUserId(int userId) {
-        List<Flight> flightList = new ArrayList<>();
+    public void showUserFlights(int userId) {
+        List<Flight> userFlights = new ArrayList<>();
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement(Sql.GET_ALL_FLIGHT_BY_USER_ID.getValue());
+
+            stmt.setInt(1, userId);
+            stmt.execute();
             ResultSet rs = stmt.getResultSet();
+
             while (rs.next()) {
-                Flight f = getFlight(rs);
-                flightList.add(f);
+                Flight flight = getFlight(rs);
+                userFlights.add(flight);
             }
-            return flightList;
+
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return null;
+        }
+
+        if (userFlights != null && !userFlights.isEmpty()) {
+            System.out.println("Your flights:");
+            userFlights.stream().forEach(System.out::println);
+        } else {
+            System.err.println("You have no booked flights");
         }
     }
 
@@ -61,12 +70,14 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     public boolean cancelFlight(Reservation reservation) {
         int userId = (int) reservation.getUserId().getId();
         int flightId = (int) reservation.getFlightId().getId();
-        int ticketNum = reservation.getPassenger();
-        if(ticketNum != getPassengers(flightId,userId)){
-            throw new RuntimeException("Number of passengers must be equal as you booked!");
+        int ticketNum = getPassengers(flightId,userId);
+        if(ticketNum == 0){
+            System.err.println("No available reservation!");
+            return false;
         }
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement(Sql.CANCEL_FLIGHT.getValue());
+
             stmt.setInt(1, flightId);
             stmt.setInt(2,  userId);
             stmt.execute();
@@ -79,30 +90,34 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     }
 
     @Override
-    public boolean bookingFlight(Reservation reservation) {
+    public boolean bookFlight(Reservation reservation) {
         int userId = (int) reservation.getUserId().getId();
         int flightId = (int) reservation.getFlightId().getId();
         int ticketNum = reservation.getPassenger();
+
         if(ticketNum > getSeats(flightId)){
             throw new RuntimeException("No enough tickets to buy!");
         }
+
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement(Sql.BOOKING_FLIGHT.getValue());
+
             stmt.setInt(1, userId);
             stmt.setInt(2, flightId);
             stmt.setInt(3, ticketNum);
             stmt.execute();
             System.out.printf("%s.flight is reserved by %s.user",flightId,userId);
             return updateSeat(flightId,ticketNum,false);
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
     }
 
-    private Integer getPassengers(int flightId, int userId) {
+    private int getPassengers(int flightId, int userId) {
+            int tNum = 0;
         try (Connection c = connect()) {
-            Integer tNum = null;
             PreparedStatement stmt = c.prepareStatement(Sql.GET_PASSENGER.getValue());
             stmt.setInt(1, flightId);
             stmt.setInt(2, userId);
@@ -114,10 +129,9 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             return tNum;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return null;
+            return 0;
         }
     }
-
     private Integer getSeats(int flightId){
         try (Connection c = connect()) {
             Integer sNum = null;
@@ -135,6 +149,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
         }
     }
 
+
     private boolean updateSeat(int flightId, int ticketNum, boolean booked){
         try (Connection c = connect()) {
             PreparedStatement stmt = null;
@@ -146,10 +161,14 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             }
             stmt.setInt(1, ticketNum);
             stmt.setInt(2, flightId);
+
             return stmt.execute();
+
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
     }
+
+
 }
