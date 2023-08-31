@@ -3,6 +3,7 @@ package org.example.app.controller;
 import org.example.app.entity.Reservation;
 import org.example.app.entity.User;
 import org.example.app.util.MenuUtil;
+
 import static org.example.app.util.MenuUtil.*;
 import static org.example.app.util.Util.*;
 
@@ -63,7 +64,10 @@ public class DispatcherController {
                 case 5 -> {
                     reservationController.showAllFlights((int) user.getId());
                 }
-                case 6 -> flag = false;
+                case 6 -> {
+                    loginRegister();
+                }
+                case 7 -> flag = false;
                 default -> System.out.println("ENTER VALID COMMAND");
             }
         }
@@ -72,23 +76,34 @@ public class DispatcherController {
 
     private void logging() {
         for (int attempts = logginCount; attempts < 3; attempts++) {
+            logginCount++;
             System.out.print("Enter username: ");
             String userName = getInput();
             System.out.print("Enter password: ");
             String password = getInput();
+
             User user = userController.authenticate(userName, password);
+
             if (user != null) {
                 selectMenu(user);
                 return;
+            } else if (attempts == 2) {
+                throw new RuntimeException("No possible user!");
             } else {
                 System.err.println("Wrong username or password!");
                 loginRegister();
             }
-        }
 
-        throw new RuntimeException("No possible user!");
+        }
     }
-    private void register(){
+
+
+
+
+
+
+
+    private void register() {
         User user = createUser();
         if (userController.addUser(user)) {
             selectMenu(user);
