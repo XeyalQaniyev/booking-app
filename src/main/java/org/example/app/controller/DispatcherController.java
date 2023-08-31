@@ -73,7 +73,6 @@ public class DispatcherController {
         }
     }
 
-
     private void logging() {
         for (int attempts = logginCount; attempts < 3; attempts++) {
             logginCount++;
@@ -91,17 +90,16 @@ public class DispatcherController {
                 throw new RuntimeException("No possible user!");
             } else {
                 System.err.println("Wrong username or password!");
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 loginRegister();
             }
 
         }
     }
-
-
-
-
-
-
 
     private void register() {
         User user = createUser();

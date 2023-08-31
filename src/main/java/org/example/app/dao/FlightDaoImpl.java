@@ -99,12 +99,6 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
         System.out.println("How many tickets: ");
         int tickets = sc.nextInt();
 
-//        getAllFlight().stream().filter(s -> ((s.getDestination().contains(destination) &&
-//                (s.getDepartureTime().getYear() == date.getYear() &&
-//                        s.getDepartureTime().getMonth() == date.getMonth() &&
-//                        s.getDepartureTime().getDayOfMonth() == date.getDayOfMonth())) &&
-//                s.getSeats() >= tickets && s.getSeats() > 0)).forEach(System.out::println);
-
         List<Flight> filteredFlights =  getAllFlight().stream()
                 .filter(
                         s -> (
