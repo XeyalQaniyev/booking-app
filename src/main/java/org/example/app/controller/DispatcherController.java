@@ -12,87 +12,110 @@ import static org.example.app.util.MenuUtil.*;
 import static org.example.app.util.Util.*;
 
 public class DispatcherController {
+    private static User loggedUser = null;
+    private static int logginCount = 0;
+    private final FlightController flightController = new FlightControllerImpl();
+    private final UserController userController = new UserControllerImpl();
+    private final ReservationController reservationController = new ReservationControllerImpl();
 
-        private final FlightController flightController = new FlightControllerImpl();
-        private final UserController userController = new UserControllerImpl();
-        private final ReservationController reservationController = new ReservationControllerImpl();
-
-        public void loginRegister(){
-            showLoginAndRegisterMenu();
-            int index = getIndex();
-            switch (index){
-                case 1->{
-                    System.out.print("Enter username: ");
-                    String userName = getInput();
-                    System.out.print("Enter password: ");
-                    String password = getInput();
-                    User user = userController.authenticate(userName,password);
-                    if (user != null){
-                        selectMenu(user);
-                    }else {
-                        loginRegister();
-                    }
-                }
-                case 2->{
-                    User user = createUser();
-                    userController.addUser(user);
-                    selectMenu(user);
-                }
+    public void loginRegister() {
+        showLoginAndRegisterMenu();
+        int index = getIndex();
+        switch (index) {
+            case 1 -> {
+                logging();
             }
-        }
-
-        public  void selectMenu(User user){
-            Reservation reservation = null;
-            boolean flag=true;
-            while (flag){
-                showMenu();
-                int index = getIndex();
-                switch (index){
-                    case 1->{
-                        flightController.showAll();
-                        selectMenu(user);
-                    }
-                    case 2->{
-                        System.out.println("Enter flight id:");
-                        int flightId = getIndex();
-                        System.out.println(flightController.getFlightById(flightId));
-                        selectMenu(user);
-                    }
-                    case 3->{
-                        showSearchAndRezervMenu();
-                        int menuInp = getIndex();
-                        switch (menuInp){
-                            case 1->{
-                                flightController.searchFlight();
-                            }
-                            case 2->{
-                                reservation = createRez(user);
-                                reservationController.bookFlight(reservation);
-                            }
-                        }
-                    }
-                    case 4->{
-                        reservation= createRez1(user);
-                        reservationController.cancelFlight(reservation);
-                    }
-                    case 5->{
-                        reservationController.showAllFlights((int)user.getId());
-                    }
-                    case 6->flag=false;
-                    default -> System.out.println("ENTER VALID COMMAND");
-                }
+            case 2 -> {
+                register();
             }
-        }
-        private void showMenu() {
-            Arrays.stream(Menu.values())
-                    .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
-        }
-        private void showSearchAndRezervMenu() {
-            Arrays.stream(SearchAndBook.values())
-                    .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
-        }
-        private void showLoginAndRegisterMenu(){
-            Arrays.stream(LoginRegister.values())
-                    .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
+
         }
     }
+
+    public void selectMenu(User user) {
+        Reservation reservation;
+        boolean flag = true;
+        while (flag) {
+            showMenu();
+            int index = getIndex();
+            switch (index) {
+                case 1 -> {
+                    flightController.showAll();
+                    selectMenu(user);
+                }
+                case 2 -> {
+                    System.out.println("Enter flight id:");
+                    int flightId = getIndex();
+                    System.out.println(flightController.getFlightById(flightId));
+                    selectMenu(user);
+                }
+                case 3 -> {
+                    showSearchAndRezervMenu();
+                    int menuInp = getIndex();
+                    switch (menuInp) {
+                        case 1 -> {
+                            flightController.searchFlight();
+                        }
+                        case 2 -> {
+                            reservation = createRez(user);
+                            reservationController.bookFlight(reservation);
+                        }
+                    }
+                }
+                case 4 -> {
+                    reservation = createRez1(user);
+                    reservationController.cancelFlight(reservation);
+                }
+                case 5 -> {
+                    reservationController.showAllFlights((int) user.getId());
+                }
+                case 6 -> flag = false;
+                default -> System.out.println("ENTER VALID COMMAND");
+            }
+        }
+    }
+
+    private void showMenu() {
+        Arrays.stream(Menu.values())
+                .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
+    }
+
+    private void showSearchAndRezervMenu() {
+        Arrays.stream(SearchAndBook.values())
+                .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
+    }
+
+    private void showLoginAndRegisterMenu() {
+        Arrays.stream(LoginRegister.values())
+                .forEach(it -> System.out.printf("%d-%s\n", it.getIndex(), it.getDescription()));
+    }
+
+    private void logging() {
+        for (int attempts = logginCount; attempts < 3; attempts++) {
+            System.out.print("Enter username: ");
+            String userName = getInput();
+            System.out.print("Enter password: ");
+            String password = getInput();
+            User user = userController.authenticate(userName, password);
+            if (user != null) {
+                loggedUser = user;
+                selectMenu(user);
+                return;
+            } else {
+                System.err.println("Wrong username or password!");
+                loginRegister();
+            }
+        }
+
+        throw new RuntimeException("No possible user!");
+    }
+    private void register(){
+        User user = createUser();
+        if (userController.addUser(user)) {
+            selectMenu(user);
+        } else {
+            System.err.println("Register failed!");
+            loginRegister();
+        }
+    }
+}

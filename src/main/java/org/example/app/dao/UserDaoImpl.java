@@ -14,9 +14,8 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public List<User> getAllUser() {
         List<User> userlist = new ArrayList<>();
-        Statement stmt = null;
         try (Connection c = connect()) {
-            stmt = connect().createStatement();
+            Statement stmt = connect().createStatement();
             stmt.execute(Sql.GET_ALL_USER.getValue());
             ResultSet rs = stmt.getResultSet();
             while (rs.next()) {

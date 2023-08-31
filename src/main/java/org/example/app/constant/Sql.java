@@ -10,7 +10,7 @@ public enum Sql {
     GET_ALL_FLIGHT_BY_USER_ID("select u.id,f.* from \"Reservation\" r\n" +
             "left join \"User\" u on r.user_id = u.id\n" +
             "left join \"Flight\" f on r.flight_id = f.id\n" +
-            "having u.id = ?"),
+            "where u.id = ?"),
     CANCEL_FLIGHT("delete from \"Reservation\" where flight_id = ? and user_id =?"),
     BOOKING_FLIGHT("insert into \"Reservation\" (user_id, flight_id, passenger) VALUES (?,?,?)"),
     GET_PASSENGER("select * from \"Reservation\" where flight_id = ? and user_id =?"),

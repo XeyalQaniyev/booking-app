@@ -1,12 +1,7 @@
 package org.example.app.dao;
-
 import org.example.app.constant.Sql;
 import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
-import org.example.app.entity.User;
-import org.postgresql.util.PSQLException;
-
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -67,7 +62,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             System.out.println("Your flights:");
             userFlights.stream().forEach(System.out::println);
         } else {
-            System.out.println("You have no booked flights");
+            System.err.println("You have no booked flights");
         }
     }
 
@@ -76,6 +71,10 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
         int userId = (int) reservation.getUserId().getId();
         int flightId = (int) reservation.getFlightId().getId();
         int ticketNum = getPassengers(flightId,userId);
+        if(ticketNum == 0){
+            System.err.println("No available reservation!");
+            return false;
+        }
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement(Sql.CANCEL_FLIGHT.getValue());
 
@@ -116,10 +115,9 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
         }
     }
 
-    private Integer getPassengers(int flightId, int userId) {
-
+    private int getPassengers(int flightId, int userId) {
+            int tNum = 0;
         try (Connection c = connect()) {
-            Integer tNum = null;
             PreparedStatement stmt = c.prepareStatement(Sql.GET_PASSENGER.getValue());
             stmt.setInt(1, flightId);
             stmt.setInt(2, userId);
@@ -131,7 +129,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             return tNum;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return null;
+            return 0;
         }
     }
     private Integer getSeats(int flightId){

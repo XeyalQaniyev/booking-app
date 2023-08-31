@@ -155,20 +155,19 @@ public class Flight {
     @Override
     public String toString() {
         return "Flight{" +
-                "\nid=" + id + ",\n" +
-                "seats=" + seats + ",\n" +
-                "flightNumber='" + flightNumber + '\'' + ",\n" +
-                "airline='" + airline + '\'' + ",\n" +
-                "destination='" + destination + '\'' + ",\n" +
-                "departureCity='" + departureCity + '\'' + ",\n" +
-                "departureTime=" + departureTime + ",\n" +
-                "arrivalTime=" + arrivalTime + ",\n" +
-                "gate='" + gate + '\'' + ",\n" +
-                "terminal='" + terminal + '\'' + ",\n" +
-                "status='" + status + '\'' + ",\n" +
-                "checkInCounter='" + checkInCounter + '\'' + ",\n" +
-                "boardingTime=" + boardingTime + "\n" +
-                "}";
-
+                "id=" + id +
+                ", seats=" + seats +
+                ", flightNumber='" + flightNumber + '\'' +
+                ", airline='" + airline + '\'' +
+                ", destination='" + destination + '\'' +
+                ", departureCity='" + departureCity + '\'' +
+                ", departureTime=" + departureTime +
+                ", arrivalTime=" + arrivalTime +
+                ", gate='" + gate + '\'' +
+                ", terminal='" + terminal + '\'' +
+                ", status='" + status + '\'' +
+                ", checkInCounter='" + checkInCounter + '\'' +
+                ", boardingTime=" + boardingTime +
+                '}';
     }
 }
