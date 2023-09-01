@@ -71,12 +71,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     @Override
     public boolean cancelFlight(Reservation reservation) {
         int userId = (int) reservation.getUserId().getId();
-        int flightId = (reservation.getFlightId() != null) ? (int) reservation.getFlightId().getId() : -1; // Default to -1 if no flightId
-        if (flightId == -1) {
-            System.err.println("No available flight!");
-            return false;
-        }
-
+        int flightId = (int) reservation.getFlightId().getId();
         int ticketNum = getPassengers(flightId, userId);
         if (ticketNum == 0) {
             System.err.println("No available reservation!");

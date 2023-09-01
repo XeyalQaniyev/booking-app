@@ -18,7 +18,13 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public boolean cancelFlight(Reservation reservation) {
-        return userFlightDao.cancelFlight(reservation);
+        int flightId = (reservation.getFlightId() != null) ? (int) reservation.getFlightId().getId() : -1;
+        if (flightId == -1) {
+            System.err.println("No available flight!");
+            return false;
+        } else {
+            return userFlightDao.cancelFlight(reservation);
+        }
 
     }
 
