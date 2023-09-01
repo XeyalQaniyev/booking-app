@@ -19,6 +19,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public boolean cancelFlight(Reservation reservation) {
         return userFlightDao.cancelFlight(reservation);
+
     }
 
     @Override

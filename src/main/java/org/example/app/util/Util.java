@@ -79,34 +79,31 @@ public class Util {
     }
 
     public static User createUser(){
-        Scanner sc = new Scanner(System.in);
         System.out.print("Enter name: ");
-        String name = sc.next();
+        String name = MenuUtil.getInput();
         System.out.print("Enter surname: ");
-        String surname = sc.next();
+        String surname = MenuUtil.getInput();
         System.out.print("Enter age: ");
-        int age = sc.nextInt();
+        int age = MenuUtil.getIndex();
         System.out.print("Enter username: ");
-        String username = sc.next();
+        String username = MenuUtil.getInput();
         System.out.print("Enter password: ");
-        String password = sc.next();
+        String password = MenuUtil.getInput();
         return new User(name,surname,age,username,password);
     }
     public static User createPassenger(){
-        Scanner sc = new Scanner(System.in);
         System.out.print("Enter name: ");
-        String name = sc.next();
+        String name = MenuUtil.getInput();
         System.out.print("Enter surname: ");
-        String surname = sc.next();
+        String surname = MenuUtil.getInput();
         System.out.print("Enter age: ");
-        int age = sc.nextInt();
+        int age = MenuUtil.getIndex();
         return new User(name,surname,age);
     }
     public static Reservation createRez1(User user){
-        Scanner sc = new Scanner(System.in);
         FlightController flightController = new FlightControllerImpl();
         System.out.println("Enter flight id: ");
-        int flightId = sc.nextInt();
+        int flightId = MenuUtil.getIndex();
         return new Reservation(user,flightController.getFlightById(flightId));
     }
 }

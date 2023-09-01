@@ -5,20 +5,34 @@ import org.example.app.constant.Menu;
 import org.example.app.constant.SearchAndBook;
 
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuUtil {
     private static final Scanner sc = new Scanner(System.in);
 
-    public static int getIndex() {
-        int cmd = sc.nextInt();
-        return cmd;
+    public static Integer getIndex() {
+        while (true) {
+            try {
+                return sc.nextInt();
+            } catch (InputMismatchException ex) {
+                sc.next();
+                System.err.println("Wrong format! Please enter an integer:");
+            }
+        }
     }
 
     public static String getInput() {
-        String str = sc.next();
-        return str;
+        while (true) {
+            try {
+                return sc.next();
+            } catch (InputMismatchException ex) {
+                sc.next();
+                System.err.println("Wrong format! Please enter a string:");
+            }
+        }
     }
+
     public static void showMenu() {
         Arrays.stream(Menu.values())
                 .forEach(it -> System.out.printf("\n%d-%s", it.getIndex(), it.getDescription()));
