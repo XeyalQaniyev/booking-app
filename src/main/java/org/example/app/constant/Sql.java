@@ -5,7 +5,7 @@ public enum Sql {
     ADD_FLIGHT("INSERT INTO \"Flight\" (seats, number, airline, destination, departure_city, " +
             "departure_time, arrival_time, gate, terminal, status, counter, boarding_time) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"),
-    GET_FLIGHT_BY_ID("SELECT * FROM \"Flight\" WHERE id = ?"),
+    GET_FLIGHT_BY_ID("SELECT * FROM \"Flight\" WHERE id = ? and id is not null"),
     GET_ALL_FLIGHT("SELECT * FROM \"Flight\""),
     GET_ALL_FLIGHT_BY_USER_ID("select u.id,f.* from \"Reservation\" r\n" +
             "left join \"User\" u on r.user_id = u.id\n" +
