@@ -2,7 +2,7 @@ package org.example.app.constant;
 
 public enum SearchAndBook {
     SEARCH(1,"Search"),
-    BOOK(2,"Rezervation");
+    BOOK(2,"Reservation");
     private final String description;
     private final int index;
 
