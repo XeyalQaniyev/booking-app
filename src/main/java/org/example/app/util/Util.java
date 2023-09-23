@@ -2,8 +2,6 @@ package org.example.app.util;
 
 import org.example.app.controller.FlightController;
 import org.example.app.controller.FlightControllerImpl;
-import org.example.app.dao.FlightDao;
-import org.example.app.dao.FlightDaoImpl;
 import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
 import org.example.app.entity.User;
@@ -12,8 +10,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -73,7 +69,8 @@ public class Util {
         List<Flight> flightList = writeFileIntoList(filePath);
         FlightController flightController = new FlightControllerImpl();
         try {
-            flightList.stream().forEach(flightController::addFlight);
+            assert flightList != null;
+            flightList.forEach(flightController::addFlight);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,50 +79,31 @@ public class Util {
     }
 
     public static User createUser(){
-        Scanner sc = new Scanner(System.in);
         System.out.print("Enter name: ");
-        String name = sc.next();
+        String name = MenuUtil.getInput();
         System.out.print("Enter surname: ");
-        String surname = sc.next();
+        String surname = MenuUtil.getInput();
         System.out.print("Enter age: ");
-        int age = sc.nextInt();
+        int age = MenuUtil.getIndex();
         System.out.print("Enter username: ");
-        String username = sc.next();
+        String username = MenuUtil.getInput();
         System.out.print("Enter password: ");
-        String password = sc.next();
+        String password = MenuUtil.getInput();
         return new User(name,surname,age,username,password);
     }
     public static User createPassenger(){
-        Scanner sc = new Scanner(System.in);
         System.out.print("Enter name: ");
-        String name = sc.next();
+        String name = MenuUtil.getInput();
         System.out.print("Enter surname: ");
-        String surname = sc.next();
+        String surname = MenuUtil.getInput();
         System.out.print("Enter age: ");
-        int age = sc.nextInt();
+        int age = MenuUtil.getIndex();
         return new User(name,surname,age);
     }
-    public static Reservation createRez(User user){
-        Scanner sc = new Scanner(System.in);
-        FlightController flightController = new FlightControllerImpl();
-        long userId = user.getId();
-        System.out.println("Enter flight id: ");
-        int flightId = sc.nextInt();
-        System.out.println("Enter passenger count: ");
-        int passenger = sc.nextInt();
-
-        for (int i = 0; i < passenger; i++) {
-            System.out.printf("Please enter %s.the user information:",i+1);
-
-        }
-        return new Reservation(user,flightController.getFlightById(flightId),passenger);
-    }
     public static Reservation createRez1(User user){
-        Scanner sc = new Scanner(System.in);
         FlightController flightController = new FlightControllerImpl();
-        long userId = user.getId();
         System.out.println("Enter flight id: ");
-        int flightId = sc.nextInt();
+        int flightId = MenuUtil.getIndex();
         return new Reservation(user,flightController.getFlightById(flightId));
     }
 }

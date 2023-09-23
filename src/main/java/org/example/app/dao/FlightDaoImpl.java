@@ -53,8 +53,8 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
 
     @Override
     public Flight getFlightById(int flightID) {
+        Flight flight = null;
         try (Connection c = connect()) {
-            Flight flight = null;
             PreparedStatement stmt = c.prepareStatement(Sql.GET_FLIGHT_BY_ID.getValue());
             stmt.setInt(1, flightID);
             stmt.execute();
@@ -112,7 +112,7 @@ public class FlightDaoImpl extends AbstractDao implements FlightDao {
                .toList();
 
        if(!filteredFlights.isEmpty()){
-           filteredFlights.stream().forEach(System.out::println);
+           filteredFlights.forEach(System.out::println);
        }
        else{
            System.err.println("No current fight in this criteria");

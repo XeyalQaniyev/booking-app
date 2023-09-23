@@ -19,12 +19,8 @@ public class DispatcherController {
         MenuUtil.showLoginAndRegisterMenu();
         int index = getIndex();
         switch (index) {
-            case 1 -> {
-                logging();
-            }
-            case 2 -> {
-                register();
-            }
+            case 1 -> logging();
+            case 2 -> register();
 
         }
     }
@@ -50,9 +46,7 @@ public class DispatcherController {
                     MenuUtil.showSearchAndRezervMenu();
                     int menuInp = getIndex();
                     switch (menuInp) {
-                        case 1 -> {
-                            flightController.searchFlight();
-                        }
+                        case 1 -> flightController.searchFlight();
                         case 2 -> {
                             reservation = createRez(user);
                             reservationController.bookFlight(reservation);
@@ -63,12 +57,8 @@ public class DispatcherController {
                     reservation = createRez1(user);
                     reservationController.cancelFlight(reservation);
                 }
-                case 5 -> {
-                    reservationController.showAllFlights((int) user.getId());
-                }
-                case 6 -> {
-                    loginRegister();
-                }
+                case 5 -> reservationController.showAllFlights((int) user.getId());
+                case 6 -> loginRegister();
                 case 7 -> flag = false;
                 default -> System.out.println("ENTER VALID COMMAND");
             }
@@ -115,6 +105,7 @@ public class DispatcherController {
             }
             loginRegister();
         } else {
+            System.out.println("Successfully registered");
             selectMenu(user);
         }
     }
@@ -122,7 +113,6 @@ public class DispatcherController {
     private Reservation createRez(User user) {
         Scanner sc = new Scanner(System.in);
         FlightController flightController = new FlightControllerImpl();
-        long userId = user.getId();
         System.out.println("Enter flight id: ");
         int flightId = sc.nextInt();
         System.out.println("Enter passenger count: ");

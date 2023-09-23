@@ -1,7 +1,9 @@
 package org.example.app.dao;
+
 import org.example.app.constant.Sql;
 import org.example.app.entity.Flight;
 import org.example.app.entity.Reservation;
+
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             ex.printStackTrace();
         }
 
-        if (userFlights != null && !userFlights.isEmpty()) {
+        if (!userFlights.isEmpty()) {
             System.out.println("Your flights:");
             userFlights.stream().forEach(System.out::println);
         } else {
@@ -70,8 +72,8 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     public boolean cancelFlight(Reservation reservation) {
         int userId = (int) reservation.getUserId().getId();
         int flightId = (int) reservation.getFlightId().getId();
-        int ticketNum = getPassengers(flightId,userId);
-        if(ticketNum == 0){
+        int ticketNum = getPassengers(flightId, userId);
+        if (ticketNum == 0) {
             System.err.println("No available reservation!");
             return false;
         }
@@ -79,7 +81,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             PreparedStatement stmt = c.prepareStatement(Sql.CANCEL_FLIGHT.getValue());
 
             stmt.setInt(1, flightId);
-            stmt.setInt(2,  userId);
+            stmt.setInt(2, userId);
             stmt.execute();
             System.out.println("Reservation was cancelled!");
             return updateSeat(flightId, ticketNum, true);
@@ -94,7 +96,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
         int userId = (int) reservation.getUserId().getId();
         int flightId = (int) reservation.getFlightId().getId();
         int ticketNum = reservation.getPassenger();
-        if(ticketNum > getSeats(flightId)){
+        if (ticketNum > getSeats(flightId)) {
             throw new RuntimeException("No enough tickets to buy!");
         }
 
@@ -105,8 +107,8 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             stmt.setInt(2, flightId);
             stmt.setInt(3, ticketNum);
             stmt.execute();
-            System.out.printf("%s.flight is reserved by %s.user",flightId,userId);
-            return updateSeat(flightId,ticketNum,false);
+            System.out.printf("%s.flight is reserved by %s.user", flightId, userId);
+            return updateSeat(flightId, ticketNum, false);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -115,7 +117,7 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     }
 
     private int getPassengers(int flightId, int userId) {
-            int tNum = 0;
+        int tNum = 0;
         try (Connection c = connect()) {
             PreparedStatement stmt = c.prepareStatement(Sql.GET_PASSENGER.getValue());
             stmt.setInt(1, flightId);
@@ -127,11 +129,11 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
             }
             return tNum;
         } catch (SQLException ex) {
-            ex.printStackTrace();
             return 0;
         }
     }
-    private Integer getSeats(int flightId){
+
+    private Integer getSeats(int flightId) {
         try (Connection c = connect()) {
             Integer sNum = null;
             PreparedStatement stmt = c.prepareStatement(Sql.GET_SEAT.getValue());
@@ -149,13 +151,12 @@ public class ReservationDaoImpl extends AbstractDao implements ReservationDao {
     }
 
 
-    private boolean updateSeat(int flightId, int ticketNum, boolean booked){
+    private boolean updateSeat(int flightId, int ticketNum, boolean booked) {
         try (Connection c = connect()) {
-            PreparedStatement stmt = null;
-            if(booked){
-            stmt = c.prepareStatement(Sql.UPDATE_SEAT.getValue());
-            }
-            else{
+            PreparedStatement stmt;
+            if (booked) {
+                stmt = c.prepareStatement(Sql.UPDATE_SEAT.getValue());
+            } else {
                 stmt = c.prepareStatement(Sql.UPDATE_SEAT_MINUS.getValue());
             }
             stmt.setInt(1, ticketNum);

@@ -1,7 +1,6 @@
 package org.example.app.dao;
 
 import org.example.app.constant.Sql;
-import org.example.app.entity.Flight;
 import org.example.app.entity.User;
 
 import java.sql.*;

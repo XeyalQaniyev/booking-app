@@ -1,6 +1,7 @@
 package org.example.app;
 
 import org.example.app.controller.DispatcherController;
+import org.example.app.util.MenuUtil;
 import org.example.app.util.Util;
 
 public class Main {
